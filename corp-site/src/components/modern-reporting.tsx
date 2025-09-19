@@ -161,9 +161,9 @@ function DashboardPreview() {
                   animate={inView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ delay: 0.6 + (i * 0.02), duration: 0.3 }}
                   className={`p-2 text-xs rounded-lg cursor-pointer transition-colors ${
-                    Math.random() > 0.7 
+                    i % 5 === 0 
                       ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                      : Math.random() > 0.5 
+                      : i % 3 === 0 
                         ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                         : 'hover:bg-white/5 text-muted-foreground'
                   }`}

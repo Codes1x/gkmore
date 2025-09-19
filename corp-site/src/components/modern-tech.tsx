@@ -247,26 +247,40 @@ function IntegrationFlow() {
       ))}
 
       {/* Animated Background Particles */}
-      {Array.from({ length: 8 }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-cyan-400/40 rounded-full"
-          animate={{
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-            opacity: [0.2, 0.8, 0.2],
-          }}
-          transition={{
-            duration: 8 + i,
-            repeat: Infinity,
-            delay: i * 0.5,
-          }}
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-        />
-      ))}
+      {Array.from({ length: 8 }).map((_, i) => {
+        // Static positions to avoid hydration mismatch
+        const positions = [
+          { left: '15%', top: '20%' },
+          { left: '85%', top: '30%' },
+          { left: '25%', top: '70%' },
+          { left: '75%', top: '15%' },
+          { left: '45%', top: '80%' },
+          { left: '65%', top: '45%' },
+          { left: '10%', top: '60%' },
+          { left: '90%', top: '75%' }
+        ];
+        
+        return (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-cyan-400/40 rounded-full"
+            animate={{
+              x: [0, 100, 0],
+              y: [0, 50, 0],
+              opacity: [0.2, 0.8, 0.2],
+            }}
+            transition={{
+              duration: 8 + i,
+              repeat: Infinity,
+              delay: i * 0.5,
+            }}
+            style={{
+              left: positions[i]?.left || '50%',
+              top: positions[i]?.top || '50%',
+            }}
+          />
+        );
+      })}
     </motion.div>
   );
 }

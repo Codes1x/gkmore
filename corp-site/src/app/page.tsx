@@ -8,6 +8,10 @@ import { ModernPortfolio } from "@/components/modern-portfolio";
 import { ModernFAQ } from "@/components/modern-faq";
 import { ModernReporting } from "@/components/modern-reporting";
 import { ModernTech } from "@/components/modern-tech";
+import { ModernStandards } from "@/components/modern-standards";
+import { ModernTeam } from "@/components/modern-team";
+import { ModernCases } from "@/components/modern-cases";
+import { ModernPartners } from "@/components/modern-partners";
 
 export default function Home() {
   return (
@@ -43,180 +47,16 @@ export default function Home() {
       <ModernTech />
 
       {/* 11. Операционные стандарты */}
-      <section id="standards" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Операционные стандарты
-          </h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Клининг и бельё</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> SLA по уборке и сменам белья, контроль чек‑листами</li>
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Инспекция качества и фотоотчёты</li>
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Поддержка и безопасность</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Диспетчерская 24/7, приоритетные заявки</li>
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Видеонаблюдение, инструктажи, допуски</li>
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Инвентаризация и damage‑policy</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Учёт имущества, регламент компенсаций</li>
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Страхование рисков</li>
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Особые стандарты</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Pet‑friendly, детские наборы, трансфер</li>
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Спортивное снаряжение, дополнительные сервисы</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ModernStandards />
 
       {/* 12. Команда */}
-      <section id="team" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Команда
-          </h2>
-          <p className="mt-2 text-[15px] text-muted-foreground max-w-3xl">
-            3–5 ключевых руководителей. Фото, должности и короткие цитаты о подходе к сервису и управлению.
-          </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { name: "Иван Петров", role: "Управляющий директор", quote: "Фокус на доходности и прозрачности для собственников." },
-              { name: "Анна Смирнова", role: "Директор по операциям", quote: "Стандарты сервиса и контроль качества — ежедневно." },
-              { name: "Сергей Иванов", role: "Коммерческий директор", quote: "Мультиканальные продажи и динамические цены." },
-            ].map((m) => (
-              <div key={m.name} className="rounded-2xl border border-border bg-card p-5 hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 size-16 rounded-full border border-border bg-muted grid place-items-center text-[18px] font-semibold text-foreground/80">
-                    {m.name.split(" ").map((w) => w[0]).slice(0,2).join("")}
-                  </div>
-                  <div className="grid gap-1">
-                    <div className="text-[16px] font-semibold text-foreground">{m.name}</div>
-                    <div className="text-[14px] text-muted-foreground">{m.role}</div>
-                  </div>
-                </div>
-                <p className="mt-3 text-[14px] text-muted-foreground leading-relaxed">"{m.quote}"</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* <ModernTeam /> */}
 
       {/* 13. Кейсы (3–5 «было → стало») */}
-      <section id="cases" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Кейсы — было → стало
-          </h2>
-          <p className="mt-2 text-[15px] text-muted-foreground max-w-3xl">
-            Реальные примеры роста загрузки, ADR и рейтинга после внедрения ценообразования, дистрибуции и стандартов.
-          </p>
-          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "Студия у моря, 28 м²",
-                before: { load: 54, adr: 8200, rating: 8.6 },
-                after: { load: 82, adr: 10100, rating: 9.3 },
-                quote: "Загрузка выросла уже в первый сезон, отчётность наглядная.",
-              },
-              {
-                title: "1‑к апартамент, 42 м²",
-                before: { load: 60, adr: 9000, rating: 8.9 },
-                after: { load: 86, adr: 11800, rating: 9.5 },
-                quote: "Сделки ускорились, корпоративные заезды закрыли межсезонье.",
-              },
-              {
-                title: "Люкс с видом, 62 м²",
-                before: { load: 48, adr: 14500, rating: 8.7 },
-                after: { load: 78, adr: 18200, rating: 9.6 },
-                quote: "Премиальный сегмент стал стабильнее за счёт каналов и цен."
-              },
-            ].map((c) => (
-              <div key={c.title} className="rounded-2xl border border-border bg-card p-5 hover:shadow-md transition-shadow">
-                <div className="text-[16px] font-semibold text-foreground">{c.title}</div>
-                <div className="mt-3 grid grid-cols-2 gap-3 text-[14px]">
-                  <div className="rounded-lg border border-border/60 p-3">
-                    <div className="text-xs uppercase text-muted-foreground">Было</div>
-                    <div>Загрузка <span className="font-semibold text-foreground">{c.before.load}%</span></div>
-                    <div>ADR <span className="font-semibold text-foreground">{c.before.adr}</span></div>
-                    <div>Рейтинг <span className="font-semibold text-foreground">{c.before.rating}</span></div>
-                  </div>
-                  <div className="rounded-lg border border-border/60 p-3 bg-[var(--secondary)]">
-                    <div className="text-xs uppercase text-muted-foreground">Стало</div>
-                    <div>Загрузка <span className="font-semibold text-foreground">{c.after.load}%</span></div>
-                    <div>ADR <span className="font-semibold text-foreground">{c.after.adr}</span></div>
-                    <div>Рейтинг <span className="font-semibold text-foreground">{c.after.rating}</span></div>
-                  </div>
-                </div>
-                <p className="mt-3 text-[14px] text-muted-foreground leading-relaxed">"{c.quote}"</p>
-                <div className="mt-4 flex gap-3">
-                  <a href="/contacts" className="inline-flex items-center justify-center h-10 px-4 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium">Запросить такой же результат</a>
-                  <a href="/portfolio" className="inline-flex items-center justify-center h-10 px-4 rounded-lg border border-border text-sm font-medium">Смотреть объект</a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ModernCases />
 
       {/* 14. Партнёрства и доверие */}
-      <section id="partners" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Партнёрства и доверие
-          </h2>
-          <div className="mt-6 grid gap-5 md:grid-cols-[1fr_0.8fr]">
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Партнёры</div>
-              <div className="mt-3 grid sm:grid-cols-2 gap-3 text-[15px]">
-                <div className="rounded-lg border border-border/60 p-3">Застройщики и УК ЖК</div>
-                <div className="rounded-lg border border-border/60 p-3">Банки и страховые компании</div>
-                <div className="rounded-lg border border-border/60 p-3">Сервисные партнёры</div>
-                <div className="rounded-lg border border-border/60 p-3">Поставщики расходников</div>
-              </div>
-              <div className="mt-4 flex flex-wrap items-center gap-4 opacity-70">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="size-12 rounded border border-border bg-muted grid place-items-center text-xs text-muted-foreground">
-                    Logo
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Награды и признание</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  «Яндекс Хорошее место — 3 года подряд»
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Участие в ассоциациях гостиничного бизнеса
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Разрешения на использование логотипов партнёров
-                </li>
-              </ul>
-              <div className="mt-4 p-3 rounded-lg border border-border/60 bg-[var(--secondary)]">
-                <div className="text-xs uppercase text-muted-foreground">Яндекс Хорошее место</div>
-                <div className="text-sm font-semibold text-foreground">2022, 2023, 2024</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ModernPartners />
 
       {/* 15. Юридический блок */}
       <section id="legal" className="px-4 sm:px-6 py-10 sm:py-14">
