@@ -2,6 +2,10 @@ import { Header } from "@/components/header";
 import { ModernStats } from "@/components/modern-stats";
 import { ModernHero } from "@/components/modern-hero";
 import { ModernBenefits } from "@/components/modern-benefits";
+import { ModernAbout } from "@/components/modern-about";
+import { ModernModel } from "@/components/modern-model";
+import { ModernPortfolio } from "@/components/modern-portfolio";
+import { ModernFAQ } from "@/components/modern-faq";
 
 export default function Home() {
   return (
@@ -19,173 +23,16 @@ export default function Home() {
       <ModernBenefits />
 
       {/* 5. О группе (кто мы) */}
-      <section id="about" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl grid md:grid-cols-[1.1fr_0.9fr] gap-8 items-start">
-          <div className="space-y-4">
-            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-              Кто мы
-            </h2>
-            <p className="text-muted-foreground text-[15px]">
-              «Группа Компаний Море» — надёжный партнёр для собственников недвижимости у моря. Мы создаём единую сеть качественного гостевого сервиса, которому доверяют и который рекомендуют.
-            </p>
-            <div className="grid sm:grid-cols-2 gap-3">
-              <div className="rounded-xl border border-border bg-card p-4">
-                <div className="text-sm text-muted-foreground">Состав группы</div>
-                <div className="mt-1 text-[15px]">Sea Family Resort & Spa</div>
-                <div className="text-[15px]">Апарт‑отель на Лучезарной (Лучезарный Резорт)</div>
-              </div>
-              <div className="rounded-xl border border-border bg-card p-4">
-                <div className="text-sm text-muted-foreground">Соответствие</div>
-                <div className="mt-1 text-[15px]">Лицензии и стандарты операционной деятельности</div>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 pt-1">
-              <a href="/model" className="inline-flex items-center justify-center h-11 px-5 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium">
-                Модель сотрудничества
-              </a>
-              <a href="/about" className="inline-flex items-center justify-center h-11 px-5 rounded-lg border border-border text-sm font-medium">
-                Подробнее о группе
-              </a>
-            </div>
-          </div>
-          <div className="rounded-2xl border border-border bg-card p-5">
-            <div className="text-sm text-muted-foreground">Наша миссия</div>
-            <p className="mt-2 text-[15px] leading-relaxed">
-              Стать партнёром №1 для собственников, обеспечивая стабильную доходность, прозрачность управления и высокий стандарт сервиса для гостей.
-            </p>
-            <ul className="mt-4 grid gap-2 text-[15px]">
-              <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Прозрачность — ежемесячная отчётность, понятные показатели</li>
-              <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Технологии — личный кабинет, удалённый мониторинг, динамические цены</li>
-              <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Поддержка 24/7 — оперативная реакция и забота о гостях</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      <ModernAbout />
 
       {/* 6. Модель сотрудничества (ревшара 35%) */}
-      <section id="model" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Модель сотрудничества — ревшара 35%
-          </h2>
-          <div className="mt-6 grid gap-5 md:grid-cols-[1.1fr_0.9fr]">
-            <div className="rounded-xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Формула распределения</div>
-              <p className="mt-2 text-[15px] leading-relaxed">
-                Выручка − Расходы = Прибыль → 65% собственнику / 35% оператору.
-              </p>
-              <ul className="mt-4 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Расходы: коммунальные платежи, мелкий ремонт, расходники — вычитаются до распределения доходов</li>
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Срок договора: минимум 11 месяцев; расторжение — за 3 месяца</li>
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> KPI/SLA: выплаты до 30‑го числа, реагирование 24/7</li>
-              </ul>
-            </div>
-            <div className="rounded-xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Что включено в комиссию</div>
-              <div className="mt-3 grid sm:grid-cols-2 gap-3 text-[15px]">
-                <div className="rounded-lg border border-border/60 p-3">Маркетинг и продажи (OTA, прямые, корпоративные)</div>
-                <div className="rounded-lg border border-border/60 p-3">Ресепшн и клининг (регламенты, стандарты)</div>
-                <div className="rounded-lg border border-border/60 p-3">Техническое обслуживание и снабжение</div>
-                <div className="rounded-lg border border-border/60 p-3">Динамическое ценообразование и аналитика</div>
-              </div>
-              <div className="mt-4 flex flex-col sm:flex-row gap-3">
-                <a href="/contacts" className="inline-flex items-center justify-center h-11 px-5 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium">Получить расчёт</a>
-                <a href="/model" className="inline-flex items-center justify-center h-11 px-5 rounded-lg border border-border text-sm font-medium">Подробнее</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ModernModel />
 
       {/* 7. Портфель и масштаб */}
-      <section id="portfolio" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Портфель и масштаб
-          </h2>
-          <p className="mt-2 text-[15px] text-muted-foreground max-w-3xl">
-            122 номера — Sea Family Resort & Spa; 38 номеров — Апарт‑отель на Лучезарной (Лучезарный Резорт). Аудитории: семьи, пары, пожилые пары. Гео: 1‑я линия у моря / 4 минуты пешком по ровной поверхности. Сезонность: 45% низкий / 93% высокий.
-          </p>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {[
-              {
-                name: "Sea Family Resort & Spa",
-                rooms: 122,
-                adr: 10114,
-                revpar: 8053,
-                geo: "1‑я линия у моря",
-                img: "/window.svg",
-              },
-              {
-                name: "Апарт‑отель на Лучезарной (Лучезарный Резорт)",
-                rooms: 38,
-                adr: 18861,
-                revpar: 16352,
-                geo: "4 минуты пешком по ровной поверхности",
-                img: "/file.svg",
-              },
-            ].map((h) => (
-              <div key={h.name} className="rounded-2xl border border-border bg-card p-5 hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 size-16 rounded-lg border border-border bg-muted grid place-items-center">
-                    <img src={h.img} alt="preview" className="opacity-70" />
-                  </div>
-                  <div className="grid gap-1">
-                    <div className="text-[16px] font-semibold text-foreground">{h.name}</div>
-                    <div className="text-[14px] text-muted-foreground">{h.geo}</div>
-                  </div>
-                </div>
-                <div className="mt-4 grid grid-cols-3 gap-2 text-[14px]">
-                  <div className="rounded-lg border border-border/60 p-3"><span className="text-foreground font-semibold">{h.rooms}</span> номеров</div>
-                  <div className="rounded-lg border border-border/60 p-3">ADR <span className="text-foreground font-semibold">{h.adr}</span></div>
-                  <div className="rounded-lg border border-border/60 p-3">RevPAR <span className="text-foreground font-semibold">{h.revpar}</span></div>
-                </div>
-                <div className="mt-4 flex gap-3">
-                  <a href="/portfolio" className="inline-flex items-center justify-center h-10 px-4 rounded-lg border border-border text-sm font-medium">Подробнее</a>
-                  <a href="/contacts" className="inline-flex items-center justify-center h-10 px-4 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium">Запросить предложение</a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ModernPortfolio />
 
       {/* 8. Закрытие возражений (FAQ‑аккордеон) */}
-      <section id="faq" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Частые вопросы собственников
-          </h2>
-          <div className="mt-6 grid gap-3">
-            {[
-              {
-                q: "Не понимаю отчётности",
-                a: "Предоставляем ежемесячную отчётность с понятными показателями и личного менеджера для разъяснений.",
-              },
-              {
-                q: "Боюсь простоев",
-                a: "Используем динамическое ценообразование и мультиканальную дистрибуцию для загрузки даже в межсезонье.",
-              },
-              {
-                q: "Нет контроля",
-                a: "Доступ к личному кабинету: календарь, выручка, расходы, бронирования и выплаты — всё прозрачно.",
-              },
-              {
-                q: "Высокие комиссии",
-                a: "Покажем калькуляцию 'до/после': все расходы прозрачны и учитываются до распределения доходов.",
-              },
-            ].map((item) => (
-              <details key={item.q} className="group rounded-xl border border-border bg-card p-4 open:shadow-md transition-shadow">
-                <summary className="cursor-pointer list-none flex items-start justify-between gap-4">
-                  <span className="text-[15px] font-medium text-foreground">{item.q}</span>
-                  <span className="mt-0.5 size-5 grid place-items-center rounded-full border border-border text-muted-foreground group-open:rotate-45 transition-transform">+</span>
-                </summary>
-                <p className="mt-3 text-[14px] text-muted-foreground leading-relaxed">{item.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ModernFAQ />
 
       {/* 9. Прозрачность, отчётность и выплаты */}
       <section id="reporting" className="px-4 sm:px-6 py-10 sm:py-14">
