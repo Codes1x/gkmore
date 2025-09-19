@@ -6,6 +6,8 @@ import { ModernAbout } from "@/components/modern-about";
 import { ModernModel } from "@/components/modern-model";
 import { ModernPortfolio } from "@/components/modern-portfolio";
 import { ModernFAQ } from "@/components/modern-faq";
+import { ModernReporting } from "@/components/modern-reporting";
+import { ModernTech } from "@/components/modern-tech";
 
 export default function Home() {
   return (
@@ -35,81 +37,10 @@ export default function Home() {
       <ModernFAQ />
 
       {/* 9. Прозрачность, отчётность и выплаты */}
-      <section id="reporting" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Прозрачность, отчётность и выплаты
-          </h2>
-          <div className="mt-6 grid gap-5 md:grid-cols-[1.1fr_0.9fr]">
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Ежемесячная отчётность</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Выручка, загрузка, ADR, RevPAR</li>
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Расходы по статьям, валовая прибыль</li>
-                <li className="flex items-start gap-2"><span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span> Выплаты собственнику до 30‑го числа</li>
-              </ul>
-              <div className="mt-4 grid sm:grid-cols-2 gap-3 text-[14px]">
-                <div className="rounded-lg border border-border/60 p-3">Шаблон отчёта (PDF/Excel)</div>
-                <div className="rounded-lg border border-border/60 p-3">История отчётов за период</div>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Личный кабинет собственника</div>
-              <div className="mt-3 grid gap-3 text-[14px]">
-                <div className="rounded-lg border border-border/60 p-3">Календарь бронирований</div>
-                <div className="rounded-lg border border-border/60 p-3">Дашборд: выручка, расходы, выплаты</div>
-                <div className="rounded-lg border border-border/60 p-3">Детализация броней и источников</div>
-                <div className="rounded-lg border border-border/60 p-3">Документы и закрывающие</div>
-              </div>
-              <div className="mt-4 flex flex-col sm:flex-row gap-3">
-                <a href="/contacts" className="inline-flex items-center justify-center h-11 px-5 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium">Демо кабинета</a>
-                <a href="/contacts" className="inline-flex items-center justify-center h-11 px-5 rounded-lg border border-border text-sm font-medium">Вопрос по выплатам</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ModernReporting />
 
       {/* 10. Технологии и интеграции */}
-      <section id="tech" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Технологии и интеграции
-          </h2>
-          <p className="mt-2 text-[15px] text-muted-foreground max-w-3xl">
-            Используем современную технологическую связку для повышения доходности и прозрачности.
-          </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "PMS/движок: Travelline",
-                desc: "Надёжный инструмент бронирований и управления каналами.",
-              },
-              {
-                title: "Динамическое ценообразование",
-                desc: "Пересмотр ставок с учётом спроса, сезона и конкурентов.",
-              },
-              {
-                title: "OTA и метапоиск",
-                desc: "Яндекс Путешествия, Озон Тревел, Островок и др.",
-              },
-              {
-                title: "Смарт‑замки и бесконтактные платежи",
-                desc: "Ускорение заселения, безопасность и удобство гостей.",
-              },
-              {
-                title: "CRM и BI‑аналитика",
-                desc: "Отслеживание LTV, источников, прогнозирование спроса.",
-              },
-            ].map((t) => (
-              <div key={t.title} className="rounded-xl border border-border bg-card p-5 hover:shadow-md transition-shadow">
-                <div className="text-[16px] font-semibold text-foreground">{t.title}</div>
-                <p className="mt-1 text-[14px] text-muted-foreground">{t.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ModernTech />
 
       {/* 11. Операционные стандарты */}
       <section id="standards" className="px-4 sm:px-6 py-10 sm:py-14">
