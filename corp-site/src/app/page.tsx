@@ -12,6 +12,8 @@ import { ModernStandards } from "@/components/modern-standards";
 import { ModernTeam } from "@/components/modern-team";
 import { ModernCases } from "@/components/modern-cases";
 import { ModernPartners } from "@/components/modern-partners";
+import { ModernLegal } from "@/components/modern-legal";
+import { ModernESG } from "@/components/modern-esg";
 
 export default function Home() {
   return (
@@ -59,140 +61,10 @@ export default function Home() {
       <ModernPartners />
 
       {/* 15. Юридический блок */}
-      <section id="legal" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Юридический блок
-          </h2>
-          <div className="mt-6 grid gap-5 md:grid-cols-2">
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Типовой договор управления</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Предмет: управление и эксплуатация апартамента
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Сроки: минимум 11 месяцев, автопролонгация
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Ответственность сторон и страхование рисков
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Требования к апартаменту</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Комплектация: мебель, техника, текстиль
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Пожарная безопасность и аварийные выходы
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Соответствие санитарным нормам
-                </li>
-              </ul>
-            </div>
-            <div className="md:col-span-2 rounded-2xl border border-border bg-card p-5">
-              <div className="text-sm text-muted-foreground">Процедура подключения собственника</div>
-              <div className="mt-3 grid grid-cols-1 sm:grid-cols-5 gap-3 text-[14px]">
-                <div className="rounded-lg border border-border/60 p-3 text-center">
-                  <div className="font-semibold text-foreground">1. Заявка</div>
-                  <div className="text-muted-foreground">Первичная консультация</div>
-                </div>
-                <div className="rounded-lg border border-border/60 p-3 text-center">
-                  <div className="font-semibold text-foreground">2. Аудит</div>
-                  <div className="text-muted-foreground">Осмотр объекта</div>
-                </div>
-                <div className="rounded-lg border border-border/60 p-3 text-center">
-                  <div className="font-semibold text-foreground">3. Договор</div>
-                  <div className="text-muted-foreground">Подписание</div>
-                </div>
-                <div className="rounded-lg border border-border/60 p-3 text-center">
-                  <div className="font-semibold text-foreground">4. Подготовка</div>
-                  <div className="text-muted-foreground">Настройка систем</div>
-                </div>
-                <div className="rounded-lg border border-border/60 p-3 text-center bg-[var(--secondary)]">
-                  <div className="font-semibold text-foreground">5. Запуск</div>
-                  <div className="text-muted-foreground">Первые гости</div>
-                </div>
-              </div>
-              <div className="mt-4 flex flex-col sm:flex-row gap-3">
-                <a href="/contacts" className="inline-flex items-center justify-center h-11 px-5 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium">Подать заявку</a>
-                <a href="/contacts" className="inline-flex items-center justify-center h-11 px-5 rounded-lg border border-border text-sm font-medium">Юридическая консультация</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ModernLegal />
 
       {/* 16. ESG и локальная повестка */}
-      <section id="esg" className="px-4 sm:px-6 py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            ESG и локальная повестка
-          </h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <div className="rounded-2xl border border-border bg-card p-5 hover:shadow-md transition-shadow">
-              <div className="text-sm text-muted-foreground">Экологические практики</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Сортировка отходов и переработка
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Эко-расходники и биоразлагаемые материалы
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Энергоэффективность и LED-освещение
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-5 hover:shadow-md transition-shadow">
-              <div className="text-sm text-muted-foreground">Локальные поставщики и кадры</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Приоритет местным поставщикам продуктов
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Трудоустройство жителей Сочи
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Поддержка малого бизнеса региона
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-border bg-card p-5 hover:shadow-md transition-shadow">
-              <div className="text-sm text-muted-foreground">Социальные инициативы</div>
-              <ul className="mt-3 grid gap-2 text-[15px]">
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Благотворительные программы
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Волонтёрские акции сотрудников
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 rounded-full bg-[var(--accent)]"></span>
-                  Образовательные проекты для молодёжи
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ModernESG />
 
       {/* 17. Контакты и лид‑форма */}
       <section id="contacts" className="px-4 sm:px-6 py-10 sm:py-14">
