@@ -9,7 +9,6 @@ import { ModernFAQ } from "@/components/modern-faq";
 import { ModernReporting } from "@/components/modern-reporting";
 import { ModernTech } from "@/components/modern-tech";
 import { ModernStandards } from "@/components/modern-standards";
-import { ModernTeam } from "@/components/modern-team";
 import { ModernCases } from "@/components/modern-cases";
 import { ModernPartners } from "@/components/modern-partners";
 import { ModernLegal } from "@/components/modern-legal";

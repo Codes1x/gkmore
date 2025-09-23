@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useSpring, useTransform, animate, useMotionValueEvent } from "framer-motion";
+import { motion, useInView, useMotionValue, animate, useMotionValueEvent } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type ModernStatProps = {
@@ -28,7 +28,6 @@ function ModernStat({
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   const progress = useMotionValue(0);
-  const smooth = useSpring(progress, { stiffness: 100, damping: 25 });
   const count = useMotionValue(0);
   const [display, setDisplay] = useState<number>(0);
   const pct = useMemo(() => (value / max) * 100, [value, max]);
@@ -83,13 +82,7 @@ function ModernStat({
   const colors = colorClasses[color];
   const size = 140;
   const stroke = 8;
-  const r = (size - stroke) / 2;
-  const circumference = 2 * Math.PI * r;
 
-  const strokeDasharray = useTransform(smooth, (v) => {
-    const len = (v / 100) * circumference;
-    return `${len} ${circumference}`;
-  });
 
   const TrendIcon = () => {
     if (trend === 'up') {

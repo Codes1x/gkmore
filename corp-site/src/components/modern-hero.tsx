@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 
 export function ModernHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -38,10 +39,12 @@ export function ModernHero() {
         style={{ y }}
       >
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/ann-v-Hd79GGx-ZOk-unsplash.jpg"
             alt="Море"
-            className="h-full w-full object-cover"
+            fill
+            className="object-cover"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 via-cyan-900/40 to-slate-900/70" />
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useAnimation } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 type BenefitProps = {
@@ -14,7 +14,6 @@ type BenefitProps = {
 function BenefitCard({ title, description, icon, color, delay = 0 }: BenefitProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
-  const controls = useAnimation();
   const [isHovered, setIsHovered] = useState(false);
 
   const colorClasses = {

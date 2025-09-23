@@ -146,7 +146,7 @@ function PartnerCard({ partner, index }: {
             transition={{ delay: index * 0.1 + 0.6, duration: 0.6 }}
             className="grid grid-cols-2 gap-3 mb-4"
           >
-            {partner.stats.map((stat, i) => (
+            {partner.stats.map((stat) => (
               <div key={stat.label} className="text-center p-2 rounded-lg bg-white/5 border border-white/10">
                 <div className={`text-lg font-bold ${colorClasses[partner.color as keyof typeof colorClasses].split(' ')[3]}`}>
                   {stat.value}

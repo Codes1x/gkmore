@@ -52,11 +52,6 @@ function DashboardPreview() {
   const inView = useInView(ref, { once: true, margin: "-50px" });
   const [activeTab, setActiveTab] = useState<'revenue' | 'calendar' | 'reports'>('revenue');
 
-  const mockData = {
-    revenue: { value: 125000, change: +12.5 },
-    occupancy: { value: 87, change: +5.2 },
-    adr: { value: 10500, change: +8.1 }
-  };
 
   return (
     <motion.div
@@ -85,7 +80,7 @@ function DashboardPreview() {
           ].map((tab) => (
             <motion.button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id as 'revenue' | 'calendar' | 'reports')}
               className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
                 activeTab === tab.id 
                   ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg' 

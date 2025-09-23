@@ -78,7 +78,6 @@ function ServiceCard({ title, description, icon, delay = 0 }: {
 export function ModernModel() {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { once: true, margin: "-100px" });
-  const [selectedTab, setSelectedTab] = useState<'formula' | 'calculator'>('formula');
 
   const services = [
     { title: "Маркетинг и продажи", description: "OTA, прямые, корпоративные", icon: "📈" },
