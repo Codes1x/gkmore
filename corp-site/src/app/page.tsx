@@ -1,5 +1,5 @@
 import { Header } from "@/components/header";
-import { ModernStats } from "@/components/modern-stats";
+import { ModernStatsOptimized } from "@/components/modern-stats-optimized";
 import { ModernHero } from "@/components/modern-hero";
 import { ModernBenefits } from "@/components/modern-benefits";
 import { ModernAbout } from "@/components/modern-about";
@@ -26,7 +26,7 @@ export default function Home() {
       <ModernHero />
 
       {/* 3. Ключевые факты (анимированные) */}
-      <ModernStats />
+      <ModernStatsOptimized />
 
       {/* 4. Преимущества / УТП */}
       <ModernBenefits />

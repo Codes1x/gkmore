@@ -1,6 +1,36 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Плавная прокрутка для всего сайта */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Оптимизация производительности прокрутки */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Улучшение производительности анимаций */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Отключение плавной прокрутки для пользователей с настройкой reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
