@@ -22,6 +22,14 @@ export const metadata: Metadata = {
   },
   description:
     "Современный быстрый корпоративный лендинг: услуги, преимущества, кейсы и контакты.",
+  robots: {
+    index: false,
+    follow: false,
+    noarchive: true,
+    nosnippet: true,
+    noimageindex: true,
+    nocache: true,
+  },
   openGraph: {
     title: "Corp — современный корпоративный сайт",
     description:
@@ -51,6 +59,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
+      <head>
+        {/* Дополнительная защита от индексации */}
+        <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, nocache" />
+        <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+        <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+        <meta name="yandexbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+        <meta name="slurp" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+        <meta httpEquiv="X-Robots-Tag" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

@@ -1,9 +1,28 @@
-# *
+# Временная блокировка индексации
 User-agent: *
-Allow: /
+Disallow: /
 
-# Host
-Host: https://example.com
+# Блокируем все основные поисковые боты
+User-agent: Googlebot
+Disallow: /
 
-# Sitemaps
-Sitemap: https://example.com/sitemap.xml
+User-agent: Bingbot
+Disallow: /
+
+User-agent: Slurp
+Disallow: /
+
+User-agent: DuckDuckBot
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
+
+User-agent: facebookexternalhit
+Disallow: /
+
+# Нет sitemap пока сайт закрыт
+# Sitemap: https://example.com/sitemap.xml
