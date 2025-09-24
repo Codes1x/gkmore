@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useAnimatedCounter, useScrollOptimized } from "@/hooks/useScrollOptimized";
+import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
 import { formatNumber } from "@/lib/scroll-utils";
 
 interface OptimizedCounterProps {
@@ -28,7 +28,7 @@ export function OptimizedCounter({
   className = "",
   startOnViewport = true
 }: OptimizedCounterProps) {
-  const { elementRef, currentValue, isAnimating } = useAnimatedCounter(
+  const { ref, currentValue, isAnimating } = useAnimatedCounter(
     value,
     duration,
     startOnViewport
@@ -36,7 +36,7 @@ export function OptimizedCounter({
 
   return (
     <motion.span
-      ref={elementRef}
+      ref={ref}
       className={className}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -169,7 +169,7 @@ export function AnimatedProgressBar({
   delay = 0,
   showPercentage = true
 }: ProgressBarProps) {
-  const { elementRef, currentValue, isAnimating } = useAnimatedCounter(
+  const { ref, currentValue, isAnimating } = useAnimatedCounter(
     value,
     2000,
     true
@@ -187,7 +187,7 @@ export function AnimatedProgressBar({
 
   return (
     <motion.div
-      ref={elementRef}
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}

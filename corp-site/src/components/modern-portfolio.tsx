@@ -40,9 +40,9 @@ function MetricCard({ label, value, icon, color = "cyan", delay = 0, suffix = ""
   suffix?: string;
 }) {
   const colorClasses = {
-    cyan: "from-cyan-400 to-blue-500 border-cyan-500/30 text-cyan-600",
-    green: "from-green-400 to-emerald-500 border-green-500/30 text-green-600",
-    purple: "from-purple-400 to-violet-500 border-purple-500/30 text-purple-600"
+    cyan: "from-cyan-400 to-blue-500 border-cyan-500/30 text-white",
+    green: "from-green-400 to-emerald-500 border-green-500/30 text-white",
+    purple: "from-purple-400 to-violet-500 border-purple-500/30 text-white"
   };
 
   return (
@@ -51,14 +51,14 @@ function MetricCard({ label, value, icon, color = "cyan", delay = 0, suffix = ""
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.5, delay: delay * 0.1 }}
       whileHover={{ scale: 1.05, y: -5 }}
-      className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} bg-opacity-10 backdrop-blur-sm border p-4 hover:shadow-xl transition-all duration-300`}
+      className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} bg-opacity-20 backdrop-blur-sm border p-4 hover:shadow-xl transition-all duration-300`}
     >
       {/* Background Glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
       
       <div className="relative flex items-center justify-between">
         <div>
-          <div className={`text-2xl sm:text-3xl font-bold ${colorClasses[color as keyof typeof colorClasses].split(' ')[3]}`}>
+          <div className={`text-2xl sm:text-3xl font-bold text-white drop-shadow-lg`}>
             <AnimatedNumber value={value} delay={delay} suffix={suffix} />
           </div>
           <div className="text-sm text-muted-foreground mt-1">{label}</div>
@@ -101,7 +101,7 @@ function HotelCard({ hotel, index }: {
       whileHover={{ y: -10, scale: 1.02 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 shadow-2xl hover:border-white/20 transition-all duration-500"
+      className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/10 to-white/15 backdrop-blur-xl border border-white/20 shadow-2xl hover:border-white/30 transition-all duration-500"
     >
       {/* Background Effects */}
       <div className="absolute inset-0">
@@ -151,7 +151,7 @@ function HotelCard({ hotel, index }: {
               initial={{ opacity: 0, x: -20 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: index * 0.2 + 0.3, duration: 0.6 }}
-              className="text-xl sm:text-2xl font-bold text-foreground mb-2 leading-tight"
+              className="text-xl sm:text-2xl font-bold text-foreground mb-2 leading-tight drop-shadow-sm"
             >
               {hotel.name}
             </motion.h3>
@@ -173,7 +173,7 @@ function HotelCard({ hotel, index }: {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: index * 0.2 + 0.5, duration: 0.6 }}
-          className="text-muted-foreground mb-6 leading-relaxed"
+          className="text-muted-foreground mb-6 leading-relaxed drop-shadow-sm"
         >
           {hotel.description}
         </motion.p>
@@ -192,7 +192,7 @@ function HotelCard({ hotel, index }: {
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: index * 0.2 + 0.7 + i * 0.1, duration: 0.4 }}
               whileHover={{ scale: 1.05 }}
-              className="px-3 py-1 rounded-full bg-gradient-to-r from-cyan-400/10 to-blue-500/20 border border-cyan-500/20 text-xs font-medium text-cyan-600 backdrop-blur-sm"
+              className="px-3 py-1 rounded-full bg-gradient-to-r from-cyan-400/20 to-blue-500/30 border border-cyan-500/30 text-xs font-medium text-white backdrop-blur-sm drop-shadow-sm"
             >
               {feature}
             </motion.span>

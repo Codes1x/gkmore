@@ -26,7 +26,7 @@ export function useScrollOptimized(options: UseScrollOptimizedOptions = {}) {
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
   
-  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isScrollingRef = useRef(false);
 
   // Throttled обработчик скролла для плавных анимаций
@@ -139,8 +139,8 @@ export function useAnimatedCounter(
 ) {
   const [currentValue, setCurrentValue] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const animationRef = useRef<number>();
-  const startTimeRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number | null>(null);
   const { elementRef, isInViewport, hasBeenInViewport } = useElementInViewport();
 
   const startAnimation = useCallback(() => {
@@ -176,7 +176,7 @@ export function useAnimatedCounter(
   const stopAnimation = useCallback(() => {
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current);
-      animationRef.current = undefined;
+      animationRef.current = null;
     }
     setIsAnimating(false);
   }, []);

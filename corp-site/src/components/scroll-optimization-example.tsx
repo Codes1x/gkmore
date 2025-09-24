@@ -102,7 +102,7 @@ export function ScrollOptimizationExample() {
 
         {/* Элемент с отслеживанием видимости */}
         <motion.div
-          ref={elementRef}
+          ref={elementRef as React.RefObject<HTMLDivElement>}
           className={`p-8 rounded-2xl border-2 transition-colors duration-300 ${
             isInViewport 
               ? 'border-green-500 bg-green-500/10' 
