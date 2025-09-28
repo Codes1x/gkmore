@@ -1,0 +1,71 @@
+name: Deploy to REG.RU Server
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: corp-site/package-lock.json
+
+    - name: Install dependencies
+      run: |
+        cd corp-site
+        npm ci
+
+    - name: Build project
+      run: |
+        cd corp-site
+        npm run build
+
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd ${{ secrets.PROJECT_PATH }}
+          
+          # Остановка приложения
+          pm2 stop corp-site || true
+          
+          # Обновление кода
+          git pull origin master || git pull origin main
+          
+          # Переход в директорию проекта
+          cd corp-site
+          
+          # Установка зависимостей
+          npm ci --production=false
+          
+          # Сборка проекта
+          npm run build
+          
+          # Запуск приложения
+          pm2 restart corp-site || pm2 start ecosystem.config.js
+          
+          # Сохранение конфигурации PM2
+          pm2 save
+
+    - name: Notify deployment status
+      if: always()
+      run: |
+        if [ ${{ job.status }} == 'success' ]; then
+          echo "🚀 Deployment successful!"
+        else
+          echo "❌ Deployment failed!"
+        fi

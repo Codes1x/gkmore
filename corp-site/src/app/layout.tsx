@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
+import { PopupProvider } from "@/contexts/popup-context";
+import { ContactPopupWrapper } from "@/components/contact-popup-wrapper";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -71,9 +73,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SmoothScrollProvider offset={80}>
-          {children}
-        </SmoothScrollProvider>
+        <PopupProvider>
+          <SmoothScrollProvider offset={80}>
+            {children}
+          </SmoothScrollProvider>
+          <ContactPopupWrapper />
+        </PopupProvider>
         <Analytics />
       </body>
     </html>

@@ -3,9 +3,11 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
+import { usePopup } from "@/contexts/popup-context";
 
 export function ModernHero() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { openPopup } = usePopup();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
@@ -88,7 +90,7 @@ export function ModernHero() {
 
       {/* Main Content */}
       <motion.div 
-        className="relative z-10 flex min-h-screen items-center"
+        className="relative z-10 flex min-h-screen items-center pt-20 lg:pt-24 pb-16 lg:pb-20"
         style={{ opacity }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
@@ -151,8 +153,8 @@ export function ModernHero() {
                 transition={{ duration: 0.8, delay: 0.5 }}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
-                <motion.a
-                  href="#contacts"
+                <motion.button
+                  onClick={() => openPopup("Стать партнёром")}
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   className="group relative inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden"
@@ -171,7 +173,7 @@ export function ModernHero() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </motion.svg>
                   </span>
-                </motion.a>
+                </motion.button>
 
                 <motion.a
                   href="#portfolio"
@@ -200,19 +202,21 @@ export function ModernHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/20"
+                className="mt-12 pt-8 pb-8 border-t border-white/20"
               >
-                <div className="text-center lg:text-left">
-                  <div className="text-2xl sm:text-3xl font-bold text-white">160+</div>
-                  <div className="text-sm text-white/70">номеров в управлении</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-2xl sm:text-3xl font-bold text-white">78%</div>
-                  <div className="text-sm text-white/70">средняя загрузка</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-2xl sm:text-3xl font-bold text-white">9.4</div>
-                  <div className="text-sm text-white/70">рейтинг отелей</div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6">
+                  <div className="text-center lg:text-left">
+                    <div className="text-3xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">160+</div>
+                    <div className="text-sm sm:text-xs lg:text-sm text-white/70 leading-relaxed">номеров в управлении</div>
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <div className="text-3xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">78%</div>
+                    <div className="text-sm sm:text-xs lg:text-sm text-white/70 leading-relaxed">средняя загрузка</div>
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <div className="text-3xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">9.4</div>
+                    <div className="text-sm sm:text-xs lg:text-sm text-white/70 leading-relaxed">рейтинг отелей</div>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
@@ -261,6 +265,7 @@ export function ModernHero() {
                   </div>
 
                   <motion.button
+                    onClick={() => openPopup("Получить расчёт")}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300"

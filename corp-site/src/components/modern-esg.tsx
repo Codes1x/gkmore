@@ -263,7 +263,7 @@ function SustainabilityMetrics() {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, delay: 0.4 }}
-      className="relative rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 p-8 shadow-2xl overflow-hidden mb-16"
+      className="relative rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 p-8 shadow-2xl overflow-hidden mb-12"
     >
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-foreground mb-4">Показатели устойчивого развития</h3>
@@ -313,7 +313,7 @@ function LocalImpactMap() {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, delay: 0.6 }}
-      className="relative rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 p-8 shadow-2xl overflow-hidden mb-16"
+      className="relative rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 p-8 shadow-2xl overflow-hidden mb-12"
     >
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-foreground mb-4">География воздействия</h3>
@@ -452,7 +452,7 @@ export function ModernESG() {
   ];
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
+    <section className="relative py-12 sm:py-16 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />

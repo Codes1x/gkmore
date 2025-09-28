@@ -74,18 +74,6 @@ export default function Home() {
 
       {/* 18. Footer */}
       <ModernFooter />
-
-      {/* Mobile fixed CTA bar for immediate actions */}
-      <div className="sm:hidden fixed bottom-4 left-0 right-0 z-40 px-4">
-        <div className="mx-auto max-w-md grid grid-cols-2 gap-2">
-          <a href="/contacts" className="inline-flex items-center justify-center h-11 rounded-lg border border-border bg-white text-foreground text-sm font-medium shadow">
-            Партнёрство
-          </a>
-          <a href="/portfolio" className="inline-flex items-center justify-center h-11 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium shadow">
-            Портфель
-          </a>
-        </div>
-      </div>
     </div>
   );
 }

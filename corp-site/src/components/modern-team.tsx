@@ -243,7 +243,7 @@ function TeamStats() {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, delay: 0.4 }}
-      className="relative rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 p-8 shadow-2xl overflow-hidden mb-16"
+      className="relative rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 p-8 shadow-2xl overflow-hidden mb-12"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
@@ -300,7 +300,7 @@ function OrganizationChart() {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, delay: 0.6 }}
-      className="relative rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 p-8 shadow-2xl overflow-hidden mb-16"
+      className="relative rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/10 p-8 shadow-2xl overflow-hidden mb-12"
     >
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-foreground mb-4">Структура команды</h3>
@@ -396,7 +396,7 @@ export function ModernTeam() {
   ];
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
+    <section className="relative py-12 sm:py-16 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
@@ -437,7 +437,7 @@ export function ModernTeam() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -480,7 +480,7 @@ export function ModernTeam() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
         >
           {teamMembers.map((member, index) => (
             <TeamMemberCard key={member.name} member={member} index={index} />

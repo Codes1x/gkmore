@@ -284,7 +284,7 @@ export function ModernStats() {
   const inView = useInView(containerRef, { once: true, margin: "-50px" });
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
+    <section className="relative py-12 sm:py-16 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
@@ -325,7 +325,7 @@ export function ModernStats() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -399,7 +399,7 @@ export function ModernStats() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 1.5, duration: 0.8 }}
-          className="mt-16 text-center"
+          className="mt-12 text-center"
         >
           <div className="inline-flex items-center gap-6 px-8 py-4 rounded-2xl bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-xl border border-white/10">
             <div className="flex items-center gap-2">

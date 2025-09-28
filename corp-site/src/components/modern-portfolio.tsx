@@ -142,7 +142,9 @@ function HotelCard({ hotel, index }: {
             className="shrink-0 w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-2xl"
           >
             <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-              <span className="text-2xl">🏨</span>
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18 7V2H6V7H2V20H22V7H18ZM8 4H16V7H8V4ZM20 18H4V9H20V18ZM6 11H8V16H6V11ZM10 11H12V16H10V11ZM14 11H16V16H14V11Z"/>
+              </svg>
             </div>
           </motion.div>
           
@@ -328,7 +330,7 @@ export function ModernPortfolio() {
   };
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
+    <section className="relative py-12 sm:py-16 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />

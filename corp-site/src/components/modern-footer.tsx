@@ -244,7 +244,7 @@ export function ModernFooter() {
   ];
 
   return (
-    <footer className="relative py-16 sm:py-20 overflow-hidden">
+    <footer className="relative py-12 sm:py-16 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-t from-background via-muted/10 to-background" />

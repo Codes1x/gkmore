@@ -2,13 +2,14 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { usePopup } from "@/contexts/popup-context";
 
 type ModernStatProps = {
   label: string;
   value: number;
   max?: number;
   suffix?: string;
-  icon?: string;
+  icon?: React.ReactNode;
   description?: string;
   color?: 'cyan' | 'blue' | 'purple' | 'green' | 'orange';
   trend?: 'up' | 'down' | 'stable';
@@ -19,7 +20,11 @@ function ModernStat({
   value, 
   max = 100, 
   suffix = "", 
-  icon = "📈",
+  icon = (
+    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.59L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z"/>
+    </svg>
+  ),
   description = "",
   color = 'cyan',
   trend = 'up'
@@ -158,9 +163,11 @@ function ModernStat({
         {/* Icon */}
         <motion.div
           whileHover={{ rotate: 10, scale: 1.1 }}
-          className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${colors.iconBg} flex items-center justify-center text-white text-2xl shadow-lg mb-6`}
+          className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${colors.iconBg} flex items-center justify-center text-white shadow-lg mb-6`}
         >
-          {icon}
+          <div className="text-3xl leading-none">
+            {icon}
+          </div>
         </motion.div>
 
         {/* Value */}
@@ -231,13 +238,18 @@ function ModernStat({
 export function ModernStatsFixed() {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { once: true, margin: "-100px" });
+  const { openPopup } = usePopup();
 
   const stats = [
     {
       label: "Доходность",
       value: 35,
       suffix: "%",
-      icon: "💰",
+      icon: (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1.5V3C7.97 3 2.66 9.15 4.7 16.61C4.87 17.2 5.61 17.39 6.01 16.88C7.39 15.25 9.58 14.5 12 14.5C14.5 14.5 16.74 15.29 18.12 16.96C18.53 17.5 19.32 17.28 19.47 16.64C20.5 13.18 21 10.5 21 9ZM17 22L15.5 20.5L16.25 19.75L17 20.5L19.75 17.75L20.5 18.5L17 22Z"/>
+        </svg>
+      ),
       description: "Средняя доходность от недвижимости",
       color: 'green' as const,
       trend: 'up' as const
@@ -246,7 +258,11 @@ export function ModernStatsFixed() {
       label: "Объектов в управлении",
       value: 50,
       suffix: "+",
-      icon: "🏨",
+      icon: (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M18 7V2H6V7H2V20H22V7H18ZM8 4H16V7H8V4ZM20 18H4V9H20V18ZM6 11H8V16H6V11ZM10 11H12V16H10V11ZM14 11H16V16H14V11Z"/>
+        </svg>
+      ),
       description: "Апарт-отели и апартаменты",
       color: 'cyan' as const,
       trend: 'up' as const
@@ -255,7 +271,11 @@ export function ModernStatsFixed() {
       label: "Собственников",
       value: 45,
       suffix: "+",
-      icon: "👥",
+      icon: (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M16 4C18.21 4 20 5.79 20 8C20 10.21 18.21 12 16 12C13.79 12 12 10.21 12 8C12 5.79 13.79 4 16 4ZM9 6C10.66 6 12 7.34 12 9C12 10.66 10.66 12 9 12C7.34 12 6 10.66 6 9C6 7.34 7.34 6 9 6ZM16.6 14.6C17.47 14.84 18.07 15.64 18.07 16.56V20H22V16.56C22 14.36 19.07 13.74 16.6 14.6ZM9 14C11.67 14 17 15.34 17 18V20H1V18C1 15.34 6.33 14 9 14Z"/>
+        </svg>
+      ),
       description: "Довольных партнёров",
       color: 'blue' as const,
       trend: 'up' as const
@@ -264,7 +284,11 @@ export function ModernStatsFixed() {
       label: "Лет на рынке",
       value: 5,
       suffix: "+",
-      icon: "⭐",
+      icon: (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/>
+        </svg>
+      ),
       description: "Опыт управления недвижимостью",
       color: 'purple' as const,
       trend: 'stable' as const
@@ -272,7 +296,7 @@ export function ModernStatsFixed() {
   ];
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
+    <section className="relative py-12 sm:py-16 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
@@ -359,7 +383,7 @@ export function ModernStatsFixed() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="text-center mt-16"
+          className="text-center mt-12"
         >
           <div className="inline-flex flex-col sm:flex-row items-center gap-6 px-8 py-6 rounded-3xl bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-xl border border-white/10 shadow-xl">
             <div className="flex items-center gap-4">
@@ -372,9 +396,11 @@ export function ModernStatsFixed() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white text-2xl shadow-lg"
+                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white shadow-lg"
               >
-                📊
+                <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"/>
+                </svg>
               </motion.div>
               <div className="text-left">
                 <div className="font-semibold text-foreground text-lg">Хотите узнать больше?</div>
@@ -383,23 +409,23 @@ export function ModernStatsFixed() {
             </div>
             
             <div className="flex gap-3">
-              <motion.a
-                href="#contacts"
+              <motion.button
+                onClick={() => openPopup("Получить расчёт")}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium rounded-xl hover:shadow-lg transition-all duration-300"
               >
                 Получить расчёт
-              </motion.a>
+              </motion.button>
               
-              <motion.a
-                href="#portfolio"
+              <motion.button
+                onClick={() => openPopup("Посмотреть кейсы")}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 className="px-6 py-3 border border-white/30 text-foreground font-medium rounded-xl hover:bg-white/10 transition-all duration-300"
               >
                 Посмотреть кейсы
-              </motion.a>
+              </motion.button>
             </div>
           </div>
         </motion.div>

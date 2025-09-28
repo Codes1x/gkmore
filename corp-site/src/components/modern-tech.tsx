@@ -169,7 +169,9 @@ function IntegrationFlow() {
         transition={{ delay: 0.8, duration: 0.6, type: "spring" }}
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-2xl z-10"
       >
-        <span className="text-2xl">⚡</span>
+        <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M11,21H9L13.5,7H7V4H17V7H14.5L10,21H12L7.5,7H10V4H4V7H9.5L5,21H7L11.5,7H14V4H20V7H16.5L12,21H14L18.5,7H21V4H11V7H13.5L9,21H11Z"/>
+        </svg>
       </motion.div>
 
       {/* Integration Points */}
@@ -363,7 +365,7 @@ export function ModernTech() {
   ];
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
+    <section className="relative py-12 sm:py-16 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />

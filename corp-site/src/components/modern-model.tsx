@@ -2,6 +2,7 @@
 
 import { motion, useInView, useMotionValue, useSpring, animate } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { usePopup } from "@/contexts/popup-context";
 
 function AnimatedPercentage({ value, delay = 0 }: { value: number; delay?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -78,6 +79,7 @@ function ServiceCard({ title, description, icon, delay = 0 }: {
 export function ModernModel() {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { once: true, margin: "-100px" });
+  const { openPopup } = usePopup();
 
   const services = [
     { title: "Маркетинг и продажи", description: "OTA, прямые, корпоративные", icon: "📈" },
@@ -93,7 +95,7 @@ export function ModernModel() {
   ];
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
+    <section className="relative py-12 sm:py-16 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
@@ -383,14 +385,14 @@ export function ModernModel() {
             </div>
             
             <div className="flex gap-3">
-              <motion.a
-                href="/contacts"
+              <motion.button
+                onClick={() => openPopup("Получить расчёт")}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium rounded-xl hover:shadow-lg transition-all duration-300"
               >
                 Получить расчёт
-              </motion.a>
+              </motion.button>
               
               <motion.a
                 href="/model"

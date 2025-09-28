@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { usePopup } from "@/contexts/popup-context";
 
 type BenefitProps = {
   title: string;
@@ -191,6 +192,7 @@ function BenefitCard({ title, description, icon, color, delay = 0 }: BenefitProp
 export function ModernBenefits() {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { once: true, margin: "-100px" });
+  const { openPopup } = usePopup();
 
   const benefits = [
     {
@@ -226,7 +228,7 @@ export function ModernBenefits() {
   ];
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
+    <section className="relative py-12 sm:py-16 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
@@ -335,14 +337,14 @@ export function ModernBenefits() {
               </div>
             </div>
             
-            <motion.a
-              href="#contacts"
+            <motion.button
+              onClick={() => openPopup("Связаться с нами")}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.98 }}
               className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium rounded-xl hover:shadow-lg transition-all duration-300 whitespace-nowrap"
             >
               Связаться с нами
-            </motion.a>
+            </motion.button>
           </div>
         </motion.div>
       </div>
