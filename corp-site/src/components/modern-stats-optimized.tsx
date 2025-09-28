@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { OptimizedCounter, AnimatedStat } from "./optimized-counter";
+import { OptimizedCounter } from "./optimized-counter";
 
 type ModernStatProps = {
   label: string;
@@ -319,7 +319,7 @@ export function ModernStatsOptimized() {
 
         {/* Stats Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <ModernStat
               key={stat.label}
               {...stat}

@@ -28,7 +28,7 @@ export function OptimizedCounter({
   className = "",
   startOnViewport = true
 }: OptimizedCounterProps) {
-  const { ref, currentValue, isAnimating } = useAnimatedCounter(
+  const { ref, currentValue } = useAnimatedCounter(
     value,
     duration,
     startOnViewport
@@ -169,7 +169,7 @@ export function AnimatedProgressBar({
   delay = 0,
   showPercentage = true
 }: ProgressBarProps) {
-  const { ref, currentValue, isAnimating } = useAnimatedCounter(
+  const { ref, currentValue } = useAnimatedCounter(
     value,
     2000,
     true

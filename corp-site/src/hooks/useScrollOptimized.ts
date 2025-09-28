@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback, useState } from 'react';
-import { throttle, debounce, getScrollPercentage, isElementInViewport } from '@/lib/scroll-utils';
+import { throttle, getScrollPercentage, isElementInViewport } from '@/lib/scroll-utils';
 
 interface UseScrollOptimizedOptions {
   throttleMs?: number;
@@ -29,25 +29,24 @@ export function useScrollOptimized(options: UseScrollOptimizedOptions = {}) {
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isScrollingRef = useRef(false);
 
-  // Throttled обработчик скролла для плавных анимаций
-  const handleScroll = useCallback(
-    throttle(() => {
-      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-      const currentScrollPercentage = getScrollPercentage();
-      
-      setScrollY(currentScrollY);
-      setScrollPercentage(currentScrollPercentage);
-      
-      // Устанавливаем флаг скролла
-      if (!isScrollingRef.current) {
-        setIsScrolling(true);
-        isScrollingRef.current = true;
-      }
-      
-      // Вызываем пользовательский обработчик
-      onScroll?.(currentScrollY, currentScrollPercentage);
-      
-      // Сбрасываем таймер скролла
+  // Обработчик скролла для плавных анимаций
+  const handleScroll = useCallback(() => {
+    const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const currentScrollPercentage = getScrollPercentage();
+    
+    setScrollY(currentScrollY);
+    setScrollPercentage(currentScrollPercentage);
+    
+    // Устанавливаем флаг скролла
+    if (!isScrollingRef.current) {
+      setIsScrolling(true);
+      isScrollingRef.current = true;
+    }
+    
+    // Вызываем пользовательский обработчик
+    onScroll?.(currentScrollY, currentScrollPercentage);
+    
+    // Сбрасываем таймер скролла
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
@@ -57,25 +56,24 @@ export function useScrollOptimized(options: UseScrollOptimizedOptions = {}) {
         setIsScrolling(false);
         isScrollingRef.current = false;
         onScrollEnd?.();
-      }, debounceMs);
-    }, throttleMs),
-    [throttleMs, debounceMs, onScroll, onScrollEnd]
-  );
+    }, debounceMs);
+  }, [onScroll, onScrollEnd, debounceMs]);
 
   useEffect(() => {
     // Добавляем обработчик с passive: true для лучшей производительности
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const throttledScroll = throttle(handleScroll, throttleMs);
+    window.addEventListener('scroll', throttledScroll, { passive: true });
     
     // Инициализируем значения
     handleScroll();
     
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledScroll);
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, [handleScroll]);
+  }, [handleScroll, throttleMs]);
 
   return {
     scrollY,
@@ -88,37 +86,34 @@ export function useScrollOptimized(options: UseScrollOptimizedOptions = {}) {
  * Хук для отслеживания видимости элемента с оптимизацией
  */
 export function useElementInViewport(
-  threshold: number = 0.1,
-  rootMargin: string = '0px'
+  threshold: number = 0.1
 ) {
   const [isInViewport, setIsInViewport] = useState(false);
   const [hasBeenInViewport, setHasBeenInViewport] = useState(false);
   const elementRef = useRef<HTMLElement>(null);
 
-  const checkInViewport = useCallback(
-    throttle(() => {
-      if (!elementRef.current) return;
-      
-      const inViewport = isElementInViewport(elementRef.current, threshold);
-      setIsInViewport(inViewport);
-      
-      if (inViewport && !hasBeenInViewport) {
-        setHasBeenInViewport(true);
-      }
-    }, 16),
-    [threshold, hasBeenInViewport]
-  );
+  const checkInViewport = useCallback(() => {
+    if (!elementRef.current) return;
+    
+    const inViewport = isElementInViewport(elementRef.current, threshold);
+    setIsInViewport(inViewport);
+    
+    if (inViewport && !hasBeenInViewport) {
+      setHasBeenInViewport(true);
+    }
+  }, [threshold, hasBeenInViewport]);
 
   useEffect(() => {
-    window.addEventListener('scroll', checkInViewport, { passive: true });
-    window.addEventListener('resize', checkInViewport, { passive: true });
+    const throttledCheck = throttle(checkInViewport, 16);
+    window.addEventListener('scroll', throttledCheck, { passive: true });
+    window.addEventListener('resize', throttledCheck, { passive: true });
     
     // Проверяем сразу
     checkInViewport();
     
     return () => {
-      window.removeEventListener('scroll', checkInViewport);
-      window.removeEventListener('resize', checkInViewport);
+      window.removeEventListener('scroll', throttledCheck);
+      window.removeEventListener('resize', throttledCheck);
     };
   }, [checkInViewport]);
 

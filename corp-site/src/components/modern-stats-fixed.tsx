@@ -370,12 +370,12 @@ export function ModernStatsFixed() {
 
         {/* Stats Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
-            <ModernStat
-              key={stat.label}
-              {...stat}
-            />
-          ))}
+        {stats.map((stat) => (
+          <ModernStat
+            key={stat.label}
+            {...stat}
+          />
+        ))}
         </div>
 
         {/* Bottom CTA */}

@@ -91,23 +91,14 @@ function NewsletterForm() {
   );
 }
 
-function FooterSection({ title, items, icon, color, delay = 0 }: {
+function FooterSection({ title, items, icon, delay = 0 }: {
   title: string;
   items: Array<{ label: string; href?: string; external?: boolean }>;
   icon: string;
-  color: 'cyan' | 'blue' | 'purple' | 'green' | 'orange';
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
-
-  const colorClasses = {
-    cyan: 'from-cyan-400 to-blue-500',
-    blue: 'from-blue-400 to-indigo-500',
-    purple: 'from-purple-400 to-pink-500',
-    green: 'from-green-400 to-emerald-500',
-    orange: 'from-orange-400 to-red-500'
-  };
 
   return (
     <motion.div
@@ -214,7 +205,6 @@ export function ModernFooter() {
     {
       title: "Разделы",
       icon: "📋",
-      color: "cyan" as const,
       items: [
         { label: "О группе", href: "/about" },
         { label: "Модель сотрудничества", href: "/model" },
@@ -225,7 +215,6 @@ export function ModernFooter() {
     {
       title: "Отели",
       icon: "🏨",
-      color: "blue" as const,
       items: [
         { label: "Sea Family Resort & Spa" },
         { label: "Лучезарный Резорт" }
@@ -234,7 +223,6 @@ export function ModernFooter() {
     {
       title: "Документы",
       icon: "📄",
-      color: "purple" as const,
       items: [
         { label: "Политика конфиденциальности", href: "#" },
         { label: "Пользовательское соглашение", href: "#" },
@@ -354,7 +342,6 @@ export function ModernFooter() {
                 title={section.title}
                 items={section.items}
                 icon={section.icon}
-                color={section.color}
                 delay={0.2 + index * 0.1}
               />
             ))}
