@@ -11,11 +11,10 @@ type CompanyCardProps = {
   color: 'cyan' | 'blue' | 'green';
   delay?: number;
   hasButton?: boolean;
-  buttonText?: string;
   buttonLink?: string;
 };
 
-function CompanyCard({ name, description, icon, stats, color, delay = 0, hasButton = false, buttonText = "Подробнее", buttonLink = "#" }: CompanyCardProps) {
+function CompanyCard({ name, description, icon, stats, color, delay = 0, hasButton = false, buttonLink = "#" }: CompanyCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
   const [isHovered, setIsHovered] = useState(false);

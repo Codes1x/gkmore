@@ -83,7 +83,7 @@ export function CleaningReviews() {
               </div>
               
               <p className="text-gray-700 leading-relaxed">
-                "{review.text}"
+                &ldquo;{review.text}&rdquo;
               </p>
             </motion.div>
           ))}
