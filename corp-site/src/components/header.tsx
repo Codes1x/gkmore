@@ -102,20 +102,10 @@ export function Header() {
           <div className="hidden lg:flex items-center gap-3">
             <button 
               onClick={() => openPopup("Стать партнёром")}
-              className={`inline-flex items-center justify-center h-10 px-4 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
-                scrolled 
-                  ? "border border-gray-300 text-gray-700 hover:bg-gray-50" 
-                  : "border border-white/30 text-white/90 hover:bg-white/10"
-              }`}
+              className="inline-flex items-center justify-center h-10 px-4 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium hover:from-cyan-400 hover:to-blue-500 transition-all hover:scale-105 shadow-lg hover:shadow-xl"
             >
               Стать партнёром
             </button>
-            <Link 
-              href="#book" 
-              className="inline-flex items-center justify-center h-10 px-4 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium hover:from-cyan-400 hover:to-blue-500 transition-all hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              Забронировать
-            </Link>
             <button className={`inline-flex items-center justify-center h-10 px-3 rounded-lg text-xs font-medium transition-all hover:scale-105 ${
               scrolled 
                 ? "border border-gray-300 text-gray-500 hover:text-gray-700" 
@@ -154,15 +144,27 @@ export function Header() {
         openMenu ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       }`}>
         <div 
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/70"
           onClick={() => setOpenMenu(false)}
         />
         
         {/* Mobile Menu Content */}
-        <div className={`absolute top-full left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-2xl transform transition-all duration-300 ${
+        <div className={`absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-2xl transform transition-all duration-300 ${
           openMenu ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
         }`}>
-          <div className="px-4 py-6 space-y-4">
+          {/* Close Button */}
+          <div className="absolute top-4 right-4 z-50">
+            <button
+              onClick={() => setOpenMenu(false)}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-900/90 text-white hover:bg-gray-800 transition-all duration-200 shadow-lg"
+              aria-label="Закрыть меню"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59 7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12 5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/>
+              </svg>
+            </button>
+          </div>
+          <div className="px-4 pt-16 pb-6 space-y-4">
             {/* Navigation Links */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {navLinks.map(({ href, label }) => (
@@ -188,17 +190,10 @@ export function Header() {
                   openPopup("Стать партнёром");
                   handleLinkClick();
                 }}
-                className="flex-1 h-12 px-4 rounded-lg border border-gray-300 text-gray-700 text-sm font-medium text-center leading-[3rem] hover:bg-gray-50 transition-all"
+                className="flex-1 h-12 px-4 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium text-center leading-[3rem] shadow-lg hover:from-cyan-400 hover:to-blue-500 transition-all"
               >
                 Стать партнёром
               </button>
-              <Link 
-                href="#book" 
-                onClick={handleLinkClick}
-                className="flex-1 h-12 px-4 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium text-center leading-[3rem] shadow-lg"
-              >
-                Забронировать
-              </Link>
             </div>
 
             {/* Language Switcher */}

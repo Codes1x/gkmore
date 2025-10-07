@@ -63,8 +63,8 @@ function DashboardPreview() {
     >
       {/* Mock Dashboard Header */}
       <div className="p-6 border-b border-white/10">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-foreground">Личный кабинет собственника</h3>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-4">
+          <h3 className="text-base sm:text-lg font-semibold text-foreground">Личный кабинет собственника</h3>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             <span className="text-xs text-muted-foreground">Онлайн</span>
@@ -72,7 +72,7 @@ function DashboardPreview() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex gap-1 p-1 bg-white/5 rounded-xl">
+        <div className="flex flex-col sm:flex-row gap-1 p-1 bg-white/5 rounded-xl">
           {[
             { id: 'revenue', label: 'Доходы', icon: '💰' },
             { id: 'calendar', label: 'Календарь', icon: '📅' },
@@ -81,7 +81,7 @@ function DashboardPreview() {
             <motion.button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as 'revenue' | 'calendar' | 'reports')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`flex-1 flex items-center justify-center gap-2 py-2 px-2 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
                 activeTab === tab.id 
                   ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg' 
                   : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
@@ -89,8 +89,8 @@ function DashboardPreview() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span>{tab.icon}</span>
-              {tab.label}
+              <span className="text-sm sm:text-base">{tab.icon}</span>
+              <span className="truncate">{tab.label}</span>
             </motion.button>
           ))}
         </div>
@@ -106,7 +106,7 @@ function DashboardPreview() {
             className="space-y-6"
           >
             {/* Key Metrics */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
                 { label: 'Выручка', value: '125,000₽', change: '+12.5%', color: 'green' },
                 { label: 'Загрузка', value: '87%', change: '+5.2%', color: 'blue' },
@@ -145,7 +145,7 @@ function DashboardPreview() {
             className="space-y-4"
           >
             {/* Mock Calendar */}
-            <div className="grid grid-cols-7 gap-1 text-center">
+            <div className="grid grid-cols-7 gap-1 text-center overflow-x-auto">
               {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map(day => (
                 <div key={day} className="p-2 text-xs text-muted-foreground font-medium">{day}</div>
               ))}
@@ -169,7 +169,7 @@ function DashboardPreview() {
             </div>
             
             {/* Legend */}
-            <div className="flex items-center justify-center gap-4 text-xs">
+            <div className="flex items-center justify-center gap-4 text-xs flex-wrap">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-500/20 border border-green-500/30 rounded"></div>
                 <span className="text-muted-foreground">Забронировано</span>
@@ -255,7 +255,7 @@ function PaymentTimeline() {
       <div className="relative">
         {/* Timeline Line */}
         <motion.div
-          className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-400 to-blue-500"
+          className="hidden sm:block absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-400 to-blue-500"
           initial={{ height: 0 }}
           animate={inView ? { height: '100%' } : {}}
           transition={{ duration: 2, delay: 0.8 }}
@@ -268,14 +268,14 @@ function PaymentTimeline() {
               initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 1 + index * 0.2, duration: 0.5 }}
-              className="relative flex items-start gap-6"
+              className="relative flex flex-col sm:flex-row items-start gap-4 sm:gap-6"
             >
               {/* Timeline Node */}
               <motion.div
                 initial={{ scale: 0 }}
                 animate={inView ? { scale: 1 } : {}}
                 transition={{ delay: 1.2 + index * 0.2, duration: 0.4, type: "spring" }}
-                className={`relative z-10 w-16 h-16 rounded-2xl flex items-center justify-center text-2xl shadow-lg ${
+                className={`relative z-10 w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-xl sm:text-2xl shadow-lg ${
                   step.status === 'completed' 
                     ? 'bg-gradient-to-br from-green-400 to-emerald-500' 
                     : step.status === 'current'
@@ -407,7 +407,7 @@ export function ModernReporting() {
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
           {/* Features List */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -456,7 +456,7 @@ export function ModernReporting() {
 
                   {/* Tools */}
                   {feature.tools.length > 0 && (
-                    <div className="grid sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {feature.tools.map((tool, toolIndex) => (
                         <motion.div
                           key={tool}
