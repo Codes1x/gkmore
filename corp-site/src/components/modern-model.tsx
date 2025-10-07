@@ -154,7 +154,7 @@ export function ModernModel() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4"
           >
-            Ревшара <span className="bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">35%</span>
+            Ревшара <span className="bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">30%</span>
           </motion.h2>
           
           <motion.p
@@ -230,7 +230,7 @@ export function ModernModel() {
                   <div className="absolute inset-0 bg-gradient-to-br from-green-400/5 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative text-center">
                     <div className="text-4xl sm:text-5xl font-bold text-green-600 mb-2">
-                      <AnimatedPercentage value={65} delay={2.2} />
+                      <AnimatedPercentage value={70} delay={2.2} />
                     </div>
                     <div className="text-lg font-semibold text-foreground">Собственнику</div>
                     <div className="text-sm text-muted-foreground mt-1">Ваша доля</div>
@@ -245,7 +245,7 @@ export function ModernModel() {
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative text-center">
                     <div className="text-4xl sm:text-5xl font-bold text-cyan-600 mb-2">
-                      <AnimatedPercentage value={35} delay={2.4} />
+                      <AnimatedPercentage value={30} delay={2.4} />
                     </div>
                     <div className="text-lg font-semibold text-foreground">Оператору</div>
                     <div className="text-sm text-muted-foreground mt-1">Наша комиссия</div>
@@ -270,7 +270,7 @@ export function ModernModel() {
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 1.6, duration: 0.6 }}
             >
-              <h3 className="text-2xl font-bold text-foreground mb-6">Что включено в комиссию 35%</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-6">Что включено в комиссию 30%</h3>
               
               <div className="grid sm:grid-cols-2 gap-4">
                 {services.map((service, index) => (
@@ -351,12 +351,12 @@ export function ModernModel() {
               </div>
             </div>
 
-            {/* Why 35% */}
+            {/* Why 30% */}
             <div className="rounded-3xl bg-gradient-to-br from-green-500/5 to-emerald-500/10 backdrop-blur-xl border border-green-500/20 p-8 shadow-xl">
-              <h3 className="text-xl font-bold text-foreground mb-4">Почему именно 35%?</h3>
+              <h3 className="text-xl font-bold text-foreground mb-4">Почему именно 30%?</h3>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Наша комиссия покрывает все операционные расходы и обеспечивает высокое качество сервиса. 
-                При этом вы получаете больше прибыли, чем при самостоятельном управлении.
+                Снижение комиссии до 30% позволяет собственникам получать 70% прибыли при сохранении 
+                всех преимуществ профессионального управления и высокого качества сервиса.
               </p>
               <div className="flex items-center gap-2 text-sm text-green-600 font-medium">
                 <span className="w-2 h-2 bg-green-400 rounded-full"></span>

@@ -245,7 +245,7 @@ export function ModernHero() {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-white">Ревшара модель</h3>
-                      <p className="text-white/70 text-sm">35% оператору / 65% собственнику</p>
+                      <p className="text-white/70 text-sm">30% оператору / 70% собственнику</p>
                     </div>
                   </div>
 

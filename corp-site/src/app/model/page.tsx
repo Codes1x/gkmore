@@ -12,7 +12,7 @@ export default function ModelPage() {
             Модель сотрудничества
           </h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-3xl">
-            Ревшара 35% — прозрачная и выгодная схема распределения доходов для собственников недвижимости.
+            Ревшара 30% — прозрачная и выгодная схема распределения доходов для собственников недвижимости.
           </p>
         </div>
       </section>
@@ -30,11 +30,11 @@ export default function ModelPage() {
                 <div className="mt-2 text-lg text-muted-foreground">↓</div>
                 <div className="mt-2 grid grid-cols-2 gap-4">
                   <div className="p-4 rounded-lg border border-border bg-background">
-                    <div className="text-2xl font-bold text-foreground">65%</div>
+                    <div className="text-2xl font-bold text-foreground">70%</div>
                     <div className="text-sm text-muted-foreground">Собственнику</div>
                   </div>
                   <div className="p-4 rounded-lg border border-border bg-background">
-                    <div className="text-2xl font-bold text-foreground">35%</div>
+                    <div className="text-2xl font-bold text-foreground">30%</div>
                     <div className="text-sm text-muted-foreground">Оператору</div>
                   </div>
                 </div>
@@ -70,7 +70,7 @@ export default function ModelPage() {
 
             <div className="space-y-6">
               <div className="rounded-2xl border border-border bg-card p-6">
-                <h3 className="text-lg font-semibold text-foreground">Что включено в комиссию 35%</h3>
+                <h3 className="text-lg font-semibold text-foreground">Что включено в комиссию 30%</h3>
                 <div className="mt-4 space-y-3">
                   <div className="flex items-center gap-3">
                     <span className="size-2 rounded-full bg-[var(--accent)]" />
@@ -172,7 +172,7 @@ export default function ModelPage() {
                   <span className="font-medium">-25,000 ₽</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Ваша доля (65%):</span>
+                  <span>Ваша доля (70%):</span>
                   <span className="font-medium text-green-600">146,900 ₽</span>
                 </div>
                 <hr className="border-border" />
