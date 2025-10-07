@@ -7,12 +7,15 @@ type CompanyCardProps = {
   name: string;
   description: string;
   icon: string;
-  stats: { label: string; value: string }[];
-  color: 'cyan' | 'blue';
+  stats?: { label: string; value: string }[];
+  color: 'cyan' | 'blue' | 'green';
   delay?: number;
+  hasButton?: boolean;
+  buttonText?: string;
+  buttonLink?: string;
 };
 
-function CompanyCard({ name, description, icon, stats, color, delay = 0 }: CompanyCardProps) {
+function CompanyCard({ name, description, icon, stats, color, delay = 0, hasButton = false, buttonText = "Подробнее", buttonLink = "#" }: CompanyCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
   const [isHovered, setIsHovered] = useState(false);
@@ -33,13 +36,22 @@ function CompanyCard({ name, description, icon, stats, color, delay = 0 }: Compa
       glow: 'shadow-blue-500/25',
       text: 'text-blue-400',
       iconBg: 'from-blue-400 to-blue-600'
+    },
+    green: {
+      gradient: 'from-green-400 to-emerald-500',
+      bg: 'from-green-500/5 to-emerald-500/10',
+      border: 'border-green-500/20',
+      glow: 'shadow-green-500/25',
+      text: 'text-green-400',
+      iconBg: 'from-green-400 to-green-600'
     }
   };
 
   const colors = colorClasses[color];
 
   return (
-    <motion.div
+    <motion.a
+      href={hasButton ? buttonLink : "#"}
       ref={ref}
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
@@ -55,7 +67,7 @@ function CompanyCard({ name, description, icon, stats, color, delay = 0 }: Compa
       }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className={`group relative overflow-hidden rounded-3xl bg-gradient-to-br ${colors.bg} backdrop-blur-xl border ${colors.border} shadow-lg hover:shadow-2xl ${colors.glow} transition-all duration-500`}
+      className={`group relative overflow-hidden rounded-3xl bg-gradient-to-br ${colors.bg} backdrop-blur-xl border ${colors.border} shadow-lg hover:shadow-2xl ${colors.glow} transition-all duration-500 ${hasButton ? 'cursor-pointer' : ''}`}
     >
       {/* Background Glow */}
       <motion.div
@@ -135,7 +147,7 @@ function CompanyCard({ name, description, icon, stats, color, delay = 0 }: Compa
           transition={{ delay: delay * 0.2 + 0.9, duration: 0.5 }}
           className="grid grid-cols-2 gap-3"
         >
-          {stats.map((stat, index) => (
+          {stats?.map((stat, index) => (
             <div key={index} className="p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
               <div className="text-xs text-muted-foreground uppercase tracking-wide">{stat.label}</div>
               <div className="text-sm font-semibold text-foreground mt-1">{stat.value}</div>
@@ -149,7 +161,7 @@ function CompanyCard({ name, description, icon, stats, color, delay = 0 }: Compa
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-all duration-1000"
         style={{ width: '50%' }}
       />
-    </motion.div>
+    </motion.a>
   );
 }
 
@@ -204,6 +216,20 @@ export function ModernAbout() {
         { label: "ADR", value: "18,861 ₽" },
         { label: "RevPAR", value: "16,352 ₽" },
         { label: "Рейтинг", value: "9.2" }
+      ]
+    },
+    {
+      name: "Клининг",
+      description: "Наша компания по клинингу в Сочи",
+      icon: "✨",
+      color: 'green' as const,
+      hasButton: true,
+      buttonLink: "/cleaning",
+      stats: [
+        { label: "Объектов", value: "160+" },
+        { label: "Сотрудников", value: "25" },
+        { label: "Время уборки", value: "2-4 ч" },
+        { label: "Рейтинг", value: "9.8" }
       ]
     }
   ];
@@ -294,7 +320,7 @@ export function ModernAbout() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="grid lg:grid-cols-2 gap-8 mb-16"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
         >
           {companies.map((company, index) => (
             <CompanyCard
@@ -305,6 +331,9 @@ export function ModernAbout() {
               stats={company.stats}
               color={company.color}
               delay={index}
+              hasButton={company.hasButton}
+              buttonText={company.buttonText}
+              buttonLink={company.buttonLink}
             />
           ))}
         </motion.div>

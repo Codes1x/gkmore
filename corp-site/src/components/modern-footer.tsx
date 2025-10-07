@@ -1,95 +1,8 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
-function NewsletterForm() {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Здесь будет логика подписки
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubscribed(true);
-      setEmail('');
-      setTimeout(() => setIsSubscribed(false), 3000);
-    }, 1500);
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.2 }}
-      viewport={{ once: true, margin: "-50px" }}
-      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 p-6 shadow-xl"
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-      
-      <div className="relative">
-        <div className="flex items-center gap-3 mb-4">
-          <motion.div
-            whileHover={{ rotate: 10, scale: 1.1 }}
-            className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white text-lg shadow-lg"
-          >
-            📧
-          </motion.div>
-          <div>
-            <h3 className="text-lg font-semibold text-foreground">Подписка</h3>
-            <p className="text-xs text-muted-foreground">Новости и предложения</p>
-          </div>
-        </div>
-
-        {!isSubscribed ? (
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <div className="flex gap-2">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Ваш email"
-                className="h-10 flex-1 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm px-3 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-200"
-                required
-              />
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="h-10 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                ) : (
-                  '→'
-                )}
-              </motion.button>
-            </div>
-          </form>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-2 text-sm text-green-400"
-          >
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 0.5 }}
-              className="w-5 h-5 rounded-full bg-green-400 flex items-center justify-center text-white text-xs"
-            >
-              ✓
-            </motion.div>
-            Спасибо за подписку!
-          </motion.div>
-        )}
-      </div>
-    </motion.div>
-  );
-}
 
 function FooterSection({ title, items, icon, delay = 0 }: {
   title: string;
@@ -347,9 +260,8 @@ export function ModernFooter() {
             ))}
           </div>
 
-          {/* Newsletter and Social */}
+          {/* Social */}
           <div className="lg:col-span-1 space-y-6">
-            <NewsletterForm />
             <SocialLinks />
           </div>
         </div>

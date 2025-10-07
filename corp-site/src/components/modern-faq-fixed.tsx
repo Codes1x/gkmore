@@ -35,28 +35,6 @@ function FAQAccordion({ item, index, isOpen, onToggle }: {
           animate={isOpen ? { opacity: 1, scale: 1.02 } : { opacity: 0, scale: 1 }}
           transition={{ duration: 0.3 }}
         />
-        
-        {/* Floating Particles */}
-        {Array.from({ length: 2 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1.5 h-1.5 bg-cyan-400/30 rounded-full"
-            animate={{
-              x: [0, 15, 0],
-              y: [0, -8, 0],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{
-              duration: 4 + i,
-              repeat: Infinity,
-              delay: i * 0.5,
-            }}
-            style={{
-              left: `${15 + i * 40}%`,
-              top: `${20 + i * 30}%`,
-            }}
-          />
-        ))}
       </div>
 
       <div className="relative">
@@ -64,8 +42,8 @@ function FAQAccordion({ item, index, isOpen, onToggle }: {
         <motion.button
           onClick={onToggle}
           className="w-full p-6 sm:p-8 text-left focus:outline-none focus:ring-2 focus:ring-cyan-500/50 rounded-3xl"
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.99 }}
+          whileHover={{ scale: 1.005 }}
+          whileTap={{ scale: 0.995 }}
         >
           <div className="flex items-start gap-4 sm:gap-6">
             {/* Icon */}
@@ -114,14 +92,14 @@ function FAQAccordion({ item, index, isOpen, onToggle }: {
         </motion.button>
 
         {/* Answer Content */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0, y: -10 }}
-              animate={{ opacity: 1, height: "auto", y: 0 }}
-              exit={{ opacity: 0, height: 0, y: -10 }}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
               transition={{ 
-                duration: 0.4,
+                duration: 0.3,
                 ease: [0.04, 0.62, 0.23, 0.98]
               }}
               className="overflow-hidden"
@@ -165,7 +143,7 @@ function FAQAccordion({ item, index, isOpen, onToggle }: {
 
       {/* Shine Effect */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         animate={isOpen ? { x: ['-100%', '100%'] } : {}}
         transition={{ duration: 2, ease: "easeInOut" }}
         style={{ transform: 'skewX(-20deg)' }}
@@ -174,10 +152,10 @@ function FAQAccordion({ item, index, isOpen, onToggle }: {
   );
 }
 
-export function ModernFAQ() {
+export function ModernFAQFixed() {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { once: true, margin: "-100px" });
-  const [openItems, setOpenItems] = useState<Set<string>>(new Set(["reporting"])); // First item open by default
+  const [openItems, setOpenItems] = useState<Set<string>>(new Set(["reporting"]));
 
   const faqItems: FAQItem[] = [
     {
@@ -208,7 +186,7 @@ export function ModernFAQ() {
 
 Результат: средняя загрузка наших объектов 78% против 45-60% при самостоятельном управлении. Даже в низкий сезон поддерживаем загрузку 45-50%.`,
       icon: "😰",
-      category: "Загрузка"
+      category: "Гарантии"
     },
     {
       id: "control",
