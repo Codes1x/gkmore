@@ -15,7 +15,7 @@ type CompanyCardProps = {
 };
 
 function CompanyCard({ name, description, icon, stats, color, delay = 0, hasButton = false, buttonLink = "#" }: CompanyCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLAnchorElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
   const [isHovered, setIsHovered] = useState(false);
 
@@ -331,7 +331,6 @@ export function ModernAbout() {
               color={company.color}
               delay={index}
               hasButton={company.hasButton}
-              buttonText={company.buttonText}
               buttonLink={company.buttonLink}
             />
           ))}
