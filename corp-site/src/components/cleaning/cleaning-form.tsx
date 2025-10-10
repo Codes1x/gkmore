@@ -97,7 +97,7 @@ export function CleaningForm() {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
-                    placeholder="+7 (900) 000-00-00"
+                    placeholder="+7 (900) 001-66-58"
                   />
                 </div>
               </div>

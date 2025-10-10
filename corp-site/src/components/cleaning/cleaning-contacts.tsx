@@ -7,29 +7,29 @@ const contacts = [
   {
     icon: "📞",
     title: "Телефон",
-    value: "+7 (900) 000-00-00",
-    href: "tel:+79000000000",
+    value: "+7 (900) 001-66-58",
+    href: "tel:+79000016658",
     description: "Звоните в любое время"
   },
   {
     icon: "💬",
     title: "WhatsApp",
-    value: "+7 (900) 000-00-00",
-    href: "https://wa.me/79000000000",
+    value: "+7 (900) 001-66-58",
+    href: "https://wa.me/79000016658",
     description: "Быстрая связь через WhatsApp"
   },
   {
     icon: "✈️",
     title: "Telegram",
-    value: "@cleaning_sochi",
-    href: "https://t.me/cleaning_sochi",
+    value: "@CleanGKMore",
+    href: "https://t.me/CleanGKMore",
     description: "Пишите в Telegram"
   },
   {
     icon: "📍",
     title: "Адрес",
-    value: "г. Сочи, ул. Приморская, 10",
-    href: "https://yandex.ru/maps/-/CCUQjQJh0D",
+    value: "г. Сочи, пгт. Дагомыс, ш. Барановское, 8а",
+    href: "https://yandex.ru/maps/-/CLFhJONO",
     description: "Наш офис в центре Сочи"
   }
 ];
@@ -94,7 +94,7 @@ export function CleaningContacts() {
         >
           <div className="h-96">
             <iframe
-              src="https://yandex.ru/map-widget/v1/?um=constructor%3A1234567890abcdef&source=constructor"
+              src="https://yandex.ru/map-widget/v1/?um=constructor%3Ae9d377947107c288533b56765847c8dd9fc58813c2ca7e13dc35666edd9c611c"
               width="100%"
               height="100%"
               frameBorder="0"
