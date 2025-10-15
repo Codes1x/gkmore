@@ -85,12 +85,12 @@ export function Header() {
               <Link 
                 key={href}
                 href={href} 
-                className={`text-sm font-medium transition-all duration-200 hover:scale-105 ${
+                className={`relative text-sm font-medium transition-all duration-200 hover:scale-105 px-3 py-2 rounded-lg ${
                   isActiveLink(href)
-                    ? (scrolled ? "text-cyan-600" : "text-cyan-300")
-                    : (scrolled ? "text-gray-600 hover:text-gray-900" : "text-white/80 hover:text-white")
+                    ? (scrolled ? "text-cyan-600 bg-cyan-50" : "text-cyan-300 bg-cyan-500/10")
+                    : (scrolled ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100" : "text-white/80 hover:text-white hover:bg-white/10")
                 } ${
-                  isActiveLink(href) ? "border-b-2 border-current pb-1" : ""
+                  isActiveLink(href) ? "border-b-2 border-current" : ""
                 }`}
               >
                 {label}
@@ -117,10 +117,10 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className={`lg:hidden inline-flex items-center justify-center size-10 rounded-md border transition-all ${
+            className={`lg:hidden inline-flex items-center justify-center size-12 rounded-lg border transition-all duration-200 hover:scale-105 active:scale-95 ${
               scrolled 
-                ? "border-gray-300 text-gray-700" 
-                : "border-white/30 text-white"
+                ? "border-gray-300 text-gray-700 hover:bg-gray-100" 
+                : "border-white/30 text-white hover:bg-white/10"
             } ${openMenu ? "rotate-90" : ""}`}
             onClick={() => setOpenMenu((v) => !v)}
             aria-label={openMenu ? "Закрыть меню" : "Открыть меню"}
@@ -140,7 +140,7 @@ export function Header() {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`lg:hidden fixed inset-0 z-40 transition-opacity duration-300 ${
+      <div className={`lg:hidden fixed inset-0 z-50 transition-opacity duration-300 ${
         openMenu ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       }`}>
         <div 
@@ -148,7 +148,7 @@ export function Header() {
           onClick={() => setOpenMenu(false)}
         />
         
-        {/* Mobile Menu Content */}
+          {/* Mobile Menu Content */}
         <div className={`absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-2xl transform transition-all duration-300 ${
           openMenu ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
         }`}>
@@ -165,17 +165,17 @@ export function Header() {
             </button>
           </div>
           <div className="px-4 pt-16 pb-6 space-y-4">
-            {/* Navigation Links */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            {/* Navigation Links - вертикальный список для лучшего UX */}
+            <div className="space-y-3 mb-6">
               {navLinks.map(({ href, label }) => (
                 <Link 
                   key={href}
                   href={href} 
                   onClick={handleLinkClick}
-                  className={`rounded-lg border p-3 text-center text-sm font-medium transition-all hover:scale-105 ${
+                  className={`block w-full rounded-lg border p-4 text-center text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${
                     isActiveLink(href)
-                      ? "border-cyan-300 bg-cyan-50 text-cyan-700"
-                      : "border-gray-300 text-gray-700 hover:bg-gray-50"
+                      ? "border-cyan-300 bg-cyan-50 text-cyan-700 shadow-sm"
+                      : "border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"
                   }`}
                 >
                   {label}
