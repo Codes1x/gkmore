@@ -35,12 +35,14 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("popup-open");
+      document.documentElement.classList.add("popup-open");
     }
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "unset";
+      document.body.classList.remove("popup-open");
+      document.documentElement.classList.remove("popup-open");
     };
   }, [isOpen, onClose]);
 
@@ -103,32 +105,32 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-        onClick={(e) => e.target === e.currentTarget && onClose()}
-      >
+    <AnimatePresence mode="wait">
+      {isOpen && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[9997]"
+        >
         {/* Backdrop with Glass Morphism */}
         <motion.div 
-          initial={{ backdropFilter: "blur(0px)" }}
-          animate={{ backdropFilter: "blur(12px)" }}
-          exit={{ backdropFilter: "blur(0px)" }}
-          className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/60" 
+          initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+          animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
+          exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+          className="fixed inset-0 z-[9998] bg-gradient-to-br from-black/40 via-black/50 to-black/60"
+          onClick={onClose}
         />
         
-        {/* Modal - UX/UI 2025 Style */}
+        {/* Modal - Центрирование через fixed и transform */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 40 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.3, type: "spring", damping: 25 }}
-          className="relative w-full max-w-md"
+          className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] w-[calc(100%-2rem)] max-w-md"
+          onClick={(e) => e.stopPropagation()}
         >
           {/* Gradient Background Effect */}
           <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-3xl blur-xl opacity-30" />
@@ -381,64 +383,137 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
             </div>
           </div>
         </motion.div>
-      </motion.div>
+        </motion.div>
+      )}
 
       <style jsx global>{`
-        .phone-input-modern .react-international-phone-input-container {
-          width: 100%;
+        /* Блокировка прокрутки страницы при открытом popup */
+        body.popup-open {
+          overflow: hidden !important;
         }
         
+        html.popup-open {
+          overflow: hidden !important;
+        }
+        
+        /* Контейнер телефонного инпута */
+        .phone-input-modern {
+          position: relative;
+        }
+        
+        .phone-input-modern .react-international-phone-input-container {
+          width: 100%;
+          position: relative;
+        }
+        
+        /* Основное поле ввода */
         .phone-input-modern .react-international-phone-input {
           width: 100%;
-          padding: 1rem 1rem 1rem 3.5rem;
-          border: 2px solid #e5e7eb;
-          border-radius: 1rem;
-          font-size: 1rem;
-          transition: all 0.2s;
-          color: #111827;
+          padding: 1rem 1rem 1rem 4.5rem !important;
+          border: 2px solid #e5e7eb !important;
+          border-radius: 1rem !important;
+          font-size: 1rem !important;
+          transition: all 0.2s !important;
+          color: #111827 !important;
+          background: white !important;
+          height: auto !important;
         }
         
         .phone-input-modern .react-international-phone-input:hover {
-          border-color: #d1d5db;
+          border-color: #d1d5db !important;
         }
         
         .phone-input-modern .react-international-phone-input:focus {
-          outline: none;
-          border-color: #06b6d4;
-          box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1);
+          outline: none !important;
+          border-color: #06b6d4 !important;
+          box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1) !important;
         }
         
+        /* Состояние ошибки */
         .phone-input-modern.error .react-international-phone-input {
-          border-color: #fca5a5;
-          background-color: rgba(254, 242, 242, 0.5);
+          border-color: #fca5a5 !important;
+          background-color: rgba(254, 242, 242, 0.5) !important;
         }
         
         .phone-input-modern.error .react-international-phone-input:focus {
-          border-color: #ef4444;
-          box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+          border-color: #ef4444 !important;
+          box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
         }
         
+        /* Кнопка выбора страны */
         .phone-input-modern .react-international-phone-country-selector-button {
-          padding: 0.5rem 0.75rem;
-          border-right: 2px solid #e5e7eb;
-          background: #f9fafb;
-          border-radius: 1rem 0 0 1rem;
-          transition: background 0.2s;
+          padding: 0.75rem !important;
+          border-right: 2px solid #e5e7eb !important;
+          background: #f9fafb !important;
+          border-radius: 1rem 0 0 1rem !important;
+          transition: background 0.2s !important;
+          height: 100% !important;
+          border: none !important;
+          min-width: 4rem !important;
         }
         
         .phone-input-modern .react-international-phone-country-selector-button:hover {
-          background: #f3f4f6;
+          background: #f3f4f6 !important;
         }
         
+        /* Выпадающий список стран */
         .phone-input-modern .react-international-phone-country-selector-dropdown {
-          border: 2px solid #e5e7eb;
-          border-radius: 1rem;
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-          max-height: 16rem;
+          position: absolute !important;
+          top: 100% !important;
+          left: 0 !important;
+          right: 0 !important;
+          margin-top: 0.5rem !important;
+          border: 2px solid #e5e7eb !important;
+          border-radius: 1rem !important;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+          max-height: 16rem !important;
+          overflow-y: auto !important;
+          background: white !important;
+          z-index: 10000 !important;
+        }
+        
+        /* Элементы списка стран */
+        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item {
+          padding: 0.75rem 1rem !important;
+          cursor: pointer !important;
+          transition: background 0.15s !important;
+          display: flex !important;
+          align-items: center !important;
+          gap: 0.5rem !important;
         }
         
         .phone-input-modern .react-international-phone-country-selector-dropdown__list-item:hover {
-          background: #f0f9ff;
+          background: #f0f9ff !important;
+        }
+        
+        /* Скроллбар для списка стран */
+        .phone-input-modern .react-international-phone-country-selector-dropdown::-webkit-scrollbar {
+          width: 6px;
+        }
+        
+        .phone-input-modern .react-international-phone-country-selector-dropdown::-webkit-scrollbar-track {
+          background: #f1f5f9;
+          border-radius: 10px;
+        }
+        
+        .phone-input-modern .react-international-phone-country-selector-dropdown::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 10px;
+        }
+        
+        .phone-input-modern .react-international-phone-country-selector-dropdown::-webkit-scrollbar-thumb:hover {
+          background: #94a3b8;
+        }
+        
+        /* Адаптивность для мобильных */
+        @media (max-width: 640px) {
+          .phone-input-modern .react-international-phone-input {
+            font-size: 16px !important; /* Предотвращает зум на iOS */
+          }
+          
+          .phone-input-modern .react-international-phone-country-selector-dropdown {
+            max-height: 12rem !important;
+          }
         }
       `}</style>
     </AnimatePresence>

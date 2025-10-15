@@ -45,7 +45,8 @@ export function Header() {
     { href: "/cleaning", label: "Клининг" },
     { href: "/model", label: "Модель" },
     { href: "/portfolio", label: "Портфель" },
-    { href: "/contacts", label: "Контакты" }
+    { href: "/contacts", label: "Контакты" },
+    { href: "/popup-test", label: "🧪 Тест" }
   ];
 
   const isActiveLink = (href: string) => pathname === href;
