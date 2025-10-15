@@ -19,11 +19,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
   title: {
-    default: "Corp — современный корпоративный сайт",
-    template: "%s | Corp",
+    default: "ГК Море — профессиональный оператор апарт-отелей в Сочи",
+    template: "%s | ГК Море",
   },
   description:
-    "Современный быстрый корпоративный лендинг: услуги, преимущества, кейсы и контакты.",
+    "Профессиональный оператор апарт-отелей в Сочи. Обеспечиваем собственникам стабильную доходность и прозрачность управления. Модель ревшара 30%.",
   robots: {
     index: false,
     follow: false,
@@ -33,25 +33,33 @@ export const metadata: Metadata = {
     nocache: true,
   },
   openGraph: {
-    title: "Corp — современный корпоративный сайт",
+    title: "ГК Море — профессиональный оператор апарт-отелей в Сочи",
     description:
-      "Современный быстрый корпоративный лендинг: услуги, преимущества, кейсы и контакты.",
+      "Профессиональный оператор апарт-отелей в Сочи. Обеспечиваем собственникам стабильную доходность и прозрачность управления.",
     url: "/",
-    siteName: "Corp",
+    siteName: "ГК Море",
     images: [
-      { url: "/og.png", width: 1200, height: 630, alt: "Corp" },
+      { url: "/og.png", width: 1200, height: 630, alt: "ГК Море" },
     ],
     locale: "ru_RU",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Corp — современный корпоративный сайт",
+    title: "ГК Море — профессиональный оператор апарт-отелей в Сочи",
     description:
-      "Современный быстрый корпоративный лендинг: услуги, преимущества, кейсы и контакты.",
+      "Профессиональный оператор апарт-отелей в Сочи. Обеспечиваем собственникам стабильную доходность и прозрачность управления.",
     images: ["/og.png"],
   },
-  icons: { icon: "/favicon.ico" },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon', sizes: '180x180', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({
