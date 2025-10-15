@@ -5,6 +5,7 @@ import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
 import { PopupProvider } from "@/contexts/popup-context";
 import { ContactPopupWrapper } from "@/components/contact-popup-wrapper";
 import "./globals.css";
+import "react-international-phone/style.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

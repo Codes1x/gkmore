@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PhoneInput } from 'react-international-phone';
-import 'react-international-phone/style.css';
 
 interface ContactPopupProps {
   isOpen: boolean;
@@ -26,12 +25,38 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  
   const popupContainerRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const lastActiveEl = useRef<HTMLElement | null>(null);
+  const closeTimer = useRef<number | null>(null);
 
   // Автоматический скролл к началу при открытии popup
   useEffect(() => {
     if (isOpen && popupContainerRef.current) {
       popupContainerRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
+
+  // Блокировка скролла body, сохранение и возврат фокуса
+  useEffect(() => {
+    if (isOpen) {
+      lastActiveEl.current = document.activeElement as HTMLElement | null;
+
+      const prevOverflow = document.body.style.overflow;
+      const prevTouchAction = document.body.style.touchAction;
+
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+
+      // Начальный фокус внутрь диалога
+      setTimeout(() => dialogRef.current?.focus(), 0);
+
+      return () => {
+        document.body.style.overflow = prevOverflow;
+        document.body.style.touchAction = prevTouchAction;
+        lastActiveEl.current?.focus?.();
+      };
     }
   }, [isOpen]);
 
@@ -49,6 +74,38 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
       document.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen, onClose]);
+
+  // Простая ловушка фокуса по Tab
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (e.shiftKey && active === first) { 
+        e.preventDefault(); 
+        last.focus(); 
+      } else if (!e.shiftKey && active === last) { 
+        e.preventDefault(); 
+        first.focus(); 
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [isOpen]);
+
+  // Чистка таймера автозакрытия
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
 
   // Валидация формы
   const validateForm = (): boolean => {
@@ -94,7 +151,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
       if (response.ok) {
         setSubmitStatus("success");
         setFormData({ name: "", phone: "" });
-        setTimeout(() => {
+        closeTimer.current = window.setTimeout(() => {
           onClose();
           setSubmitStatus("idle");
         }, 2500);
@@ -117,16 +174,21 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[9999] overflow-y-auto"
+          className="fixed inset-0 z-[9999] overflow-y-auto overscroll-contain"
           onClick={onClose}
       >
         {/* Backdrop with Glass Morphism */}
-        <div className="fixed inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/60 backdrop-blur-md -z-10" />
+        <div className="fixed inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/60 backdrop-blur-md z-0" />
         
         {/* Центрирующий контейнер */}
-        <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="min-h-screen flex items-center justify-center p-4 z-10 relative">
         {/* Modal */}
         <motion.div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-title"
+            tabIndex={-1}
             initial={{ opacity: 0, scale: 0.85, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
@@ -137,7 +199,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
           {/* Gradient Background Effect */}
           <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-3xl blur-xl opacity-30" />
           
-          <div className="relative bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+          <div className="relative bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20">
             {/* Animated Header with Gradient */}
             <div className="relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600" />
@@ -165,7 +227,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white">{title}</h3>
+                    <h3 id="contact-title" className="text-xl font-bold text-white">{title}</h3>
                   </motion.div>
                   <motion.p 
                     initial={{ opacity: 0 }}
@@ -234,7 +296,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                   </motion.p>
               </motion.div>
             ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                   <motion.p 
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -261,6 +323,10 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                       </div>
                   <input
                     type="text"
+                    name="name"
+                    autoComplete="given-name"
+                    aria-invalid={!!errors.name}
+                    aria-describedby={errors.name ? 'name-error' : undefined}
                     value={formData.name}
                         onChange={(e) => {
                           setFormData(prev => ({ ...prev, name: e.target.value }));
@@ -277,6 +343,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     </div>
                   {errors.name && (
                       <motion.p 
+                        id="name-error"
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="mt-2 text-sm text-red-600 flex items-center gap-1"
@@ -294,13 +361,12 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="mb-20"
                   >
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
                       Номер телефона
                     </label>
-                    <div className="phone-input-modern relative z-20">
+                    <div className={`phone-input-modern relative z-20 ${errors.phone ? 'error' : ''}`}>
                       <PhoneInput
                         defaultCountry="ru"
                       value={formData.phone}
@@ -308,12 +374,18 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                           setFormData(prev => ({ ...prev, phone }));
                           if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
                         }}
-                        className={errors.phone ? 'error' : ''}
+                        inputProps={{
+                          name: 'phone',
+                          autoComplete: 'tel',
+                          'aria-invalid': !!errors.phone,
+                          'aria-describedby': errors.phone ? 'phone-error' : undefined,
+                        }}
                       disabled={isSubmitting}
                     />
                   </div>
                   {errors.phone && (
                       <motion.p 
+                        id="phone-error"
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="mt-2 text-sm text-red-600 flex items-center gap-1"
