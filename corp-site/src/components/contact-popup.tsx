@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
@@ -26,6 +26,14 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const popupContainerRef = useRef<HTMLDivElement>(null);
+
+  // Автоматический скролл к началу при открытии popup
+  useEffect(() => {
+    if (isOpen && popupContainerRef.current) {
+      popupContainerRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
 
   // Закрытие popup по Escape
   useEffect(() => {
@@ -35,14 +43,10 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
-      document.body.classList.add("popup-open");
-      document.documentElement.classList.add("popup-open");
     }
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      document.body.classList.remove("popup-open");
-      document.documentElement.classList.remove("popup-open");
     };
   }, [isOpen, onClose]);
 
@@ -108,30 +112,28 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[9997]"
-        >
-        {/* Backdrop with Glass Morphism */}
-        <motion.div 
-          initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-          animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
-          exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-          className="fixed inset-0 z-[9998] bg-gradient-to-br from-black/40 via-black/50 to-black/60"
+      <motion.div
+        ref={popupContainerRef}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[9999] overflow-y-auto"
           onClick={onClose}
-        />
+      >
+        {/* Backdrop with Glass Morphism */}
+        <div className="fixed inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/60 backdrop-blur-md -z-10" />
         
-        {/* Modal - Центрирование через fixed и transform */}
+        {/* Центрирующий контейнер */}
+        <div className="min-h-screen flex items-center justify-center p-4">
+        {/* Modal */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.3, type: "spring", damping: 25 }}
-          className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] w-[calc(100%-2rem)] max-w-md"
-          onClick={(e) => e.stopPropagation()}
-        >
+            initial={{ opacity: 0, scale: 0.85, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 10 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="relative w-full max-w-md my-8"
+            onClick={(e) => e.stopPropagation()}
+          >
           {/* Gradient Background Effect */}
           <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-3xl blur-xl opacity-30" />
           
@@ -175,22 +177,22 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                   </motion.p>
                 </div>
                 
-                <button
-                  onClick={onClose}
+            <button
+              onClick={onClose}
                   className="p-2 hover:bg-white/20 rounded-xl transition-all duration-200 group"
-                  aria-label="Закрыть"
-                >
+              aria-label="Закрыть"
+            >
                   <svg className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
               </div>
-            </div>
+          </div>
 
-            {/* Content */}
+          {/* Content */}
             <div className="p-8">
-              {submitStatus === "success" ? (
-                <motion.div
+            {submitStatus === "success" ? (
+              <motion.div
                   initial={{ opacity: 0, scale: 0.8, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ duration: 0.5, type: "spring" }}
@@ -215,8 +217,8 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     </svg>
                   </motion.div>
                   <motion.h4 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
                     className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-3"
                   >
@@ -230,8 +232,8 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                   >
                     Спасибо за обращение! Наш менеджер свяжется с вами в ближайшее время.
                   </motion.p>
-                </motion.div>
-              ) : (
+              </motion.div>
+            ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <motion.p 
                     initial={{ opacity: 0, y: -10 }}
@@ -241,7 +243,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     Оставьте свои контакты, и наш менеджер проконсультирует вас по всем вопросам сотрудничества.
                   </motion.p>
 
-                  {/* Поле имени */}
+                {/* Поле имени */}
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -250,16 +252,16 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full" />
                       Ваше имя
-                    </label>
+                  </label>
                     <div className="relative">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                       </div>
-                      <input
-                        type="text"
-                        value={formData.name}
+                  <input
+                    type="text"
+                    value={formData.name}
                         onChange={(e) => {
                           setFormData(prev => ({ ...prev, name: e.target.value }));
                           if (errors.name) setErrors(prev => ({ ...prev, name: undefined }));
@@ -270,10 +272,10 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                         placeholder="Иван Петров"
-                        disabled={isSubmitting}
-                      />
+                    disabled={isSubmitting}
+                  />
                     </div>
-                    {errors.name && (
+                  {errors.name && (
                       <motion.p 
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -281,7 +283,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                       >
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                        </svg>
+                      </svg>
                         {errors.name}
                       </motion.p>
                     )}
@@ -300,16 +302,16 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     <div className="phone-input-modern">
                       <PhoneInput
                         defaultCountry="ru"
-                        value={formData.phone}
+                      value={formData.phone}
                         onChange={(phone) => {
                           setFormData(prev => ({ ...prev, phone }));
                           if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
                         }}
                         className={errors.phone ? 'error' : ''}
-                        disabled={isSubmitting}
-                      />
-                    </div>
-                    {errors.phone && (
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  {errors.phone && (
                       <motion.p 
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -323,7 +325,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     )}
                   </motion.div>
 
-                  {submitStatus === "error" && (
+                {submitStatus === "error" && (
                     <motion.div 
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -335,28 +337,28 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                       <div>
                         <p className="text-sm font-medium text-red-800">Ошибка отправки</p>
                         <p className="text-sm text-red-600 mt-0.5">Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.</p>
-                      </div>
+                  </div>
                     </motion.div>
-                  )}
+                )}
 
-                  {/* Кнопка отправки */}
+                {/* Кнопка отправки */}
                   <motion.button
-                    type="submit"
-                    disabled={isSubmitting}
+                  type="submit"
+                  disabled={isSubmitting}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="w-full relative overflow-hidden bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl disabled:cursor-not-allowed group"
-                  >
+                >
                     <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isSubmitting ? (
-                        <>
+                  {isSubmitting ? (
+                    <>
                           <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                          </svg>
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
                           <span>Отправляем...</span>
-                        </>
-                      ) : (
+                    </>
+                  ) : (
                         <>
                           <span>Отправить заявку</span>
                           <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -378,23 +380,16 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                       политикой конфиденциальности
                     </a>
                   </motion.p>
-                </form>
-              )}
+              </form>
+            )}
             </div>
           </div>
-        </motion.div>
+          </motion.div>
+          </div>
         </motion.div>
       )}
 
       <style jsx global>{`
-        /* Блокировка прокрутки страницы при открытом popup */
-        body.popup-open {
-          overflow: hidden !important;
-        }
-        
-        html.popup-open {
-          overflow: hidden !important;
-        }
         
         /* Контейнер телефонного инпута */
         .phone-input-modern {
