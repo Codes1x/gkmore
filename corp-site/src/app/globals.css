@@ -1,14 +1,35 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Плавная прокрутка для всего сайта */
+/* ===== ОПТИМИЗАЦИЯ ПРОКРУТКИ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ ===== */
+
+/* Плавная прокрутка с ускорением GPU */
 html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Для iOS */
+  overflow-x: hidden;
+}
+
+body {
+  /* Оптимизация рендеринга для мобильных */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  
+  /* Улучшение прокрутки на мобильных */
+  overscroll-behavior-y: none; /* Предотвращает "резиновую" прокрутку */
   scroll-behavior: smooth;
 }
 
-/* Оптимизация производительности прокрутки */
+/* Оптимизация производительности для всех элементов */
 * {
-  scroll-behavior: smooth;
+  /* Использование GPU для трансформаций и анимаций */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  
+  /* Оптимизация композитинга */
+  will-change: auto;
 }
 
 /* Улучшение производительности анимаций */
@@ -16,9 +37,23 @@ html {
   html {
     scroll-behavior: smooth;
   }
+  
+  /* Плавные анимации при прокрутке */
+  .animate-in {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+  }
+  
+  .fade-in {
+    animation-name: fadeIn;
+  }
+  
+  .slide-in-from-bottom-8 {
+    animation-name: slideInFromBottom;
+  }
 }
 
-/* Отключение плавной прокрутки для пользователей с настройкой reduced-motion */
+/* Отключение анимаций для пользователей с настройкой reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -28,6 +63,46 @@ html {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keyframes для плавного появления */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(32px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Оптимизация для мобильных устройств */
+@media (max-width: 768px) {
+  /* Уменьшение нагрузки на мобильных */
+  * {
+    will-change: auto;
+  }
+  
+  /* Отключение сложных эффектов на слабых устройствах */
+  body {
+    background-attachment: fixed;
+  }
+  
+  /* Улучшение тач-скролла */
+  html {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
