@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
 interface ContactPopupProps {
   isOpen: boolean;
@@ -19,47 +21,11 @@ interface FormErrors {
   phone?: string;
 }
 
-// Список стран с кодами и флагами
-const countries = [
-  { code: "+7", country: "RU", name: "Россия", flag: "🇷🇺", mask: "+7 (###) ###-##-##" },
-  { code: "+1", country: "US", name: "США", flag: "🇺🇸", mask: "+1 (###) ###-####" },
-  { code: "+44", country: "GB", name: "Великобритания", flag: "🇬🇧", mask: "+44 ## #### ####" },
-  { code: "+49", country: "DE", name: "Германия", flag: "🇩🇪", mask: "+49 ### #######" },
-  { code: "+33", country: "FR", name: "Франция", flag: "🇫🇷", mask: "+33 # ## ## ## ##" },
-  { code: "+39", country: "IT", name: "Италия", flag: "🇮🇹", mask: "+39 ### ### ####" },
-  { code: "+34", country: "ES", name: "Испания", flag: "🇪🇸", mask: "+34 ### ### ###" },
-  { code: "+380", country: "UA", name: "Украина", flag: "🇺🇦", mask: "+380 ## ### ## ##" },
-  { code: "+375", country: "BY", name: "Беларусь", flag: "🇧🇾", mask: "+375 ## ###-##-##" },
-  { code: "+77", country: "KZ", name: "Казахстан", flag: "🇰🇿", mask: "+77 ### ### ## ##" }
-];
-
 export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с нами" }: ContactPopupProps) {
   const [formData, setFormData] = useState<FormData>({ name: "", phone: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
-  const [selectedCountry, setSelectedCountry] = useState(countries[0]); // Россия по умолчанию
-  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
-
-  // Форматирование телефона по маске
-  const formatPhone = (value: string, mask: string) => {
-    const cleanValue = value.replace(/\D/g, '');
-    let formatted = '';
-    let maskIndex = 0;
-    
-    for (let i = 0; i < cleanValue.length && maskIndex < mask.length; i++) {
-      while (maskIndex < mask.length && mask[maskIndex] !== '#') {
-        formatted += mask[maskIndex];
-        maskIndex++;
-      }
-      if (maskIndex < mask.length) {
-        formatted += cleanValue[i];
-        maskIndex++;
-      }
-    }
-    
-    return formatted;
-  };
 
   // Закрытие popup по Escape
   useEffect(() => {
@@ -108,7 +74,6 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
     setSubmitStatus("idle");
 
     try {
-      // Здесь будет API запрос для отправки на почту
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -117,7 +82,6 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          country: selectedCountry.name
         }),
       });
 
@@ -127,7 +91,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         setTimeout(() => {
           onClose();
           setSubmitStatus("idle");
-        }, 2000);
+        }, 2500);
       } else {
         throw new Error('Ошибка отправки');
       }
@@ -139,19 +103,6 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
     }
   };
 
-  // Обработка изменения номера телефона
-  const handlePhoneChange = (value: string) => {
-    const formatted = formatPhone(value, selectedCountry.mask);
-    setFormData(prev => ({ ...prev, phone: formatted }));
-    if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
-  };
-
-  // Обработка изменения имени
-  const handleNameChange = (value: string) => {
-    setFormData(prev => ({ ...prev, name: value }));
-    if (errors.name) setErrors(prev => ({ ...prev, name: undefined }));
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -160,174 +111,336 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
         onClick={(e) => e.target === e.currentTarget && onClose()}
       >
-        {/* Backdrop */}
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+        {/* Backdrop with Glass Morphism */}
+        <motion.div 
+          initial={{ backdropFilter: "blur(0px)" }}
+          animate={{ backdropFilter: "blur(12px)" }}
+          exit={{ backdropFilter: "blur(0px)" }}
+          className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/60" 
+        />
         
-        {/* Modal */}
+        {/* Modal - UX/UI 2025 Style */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.9, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          transition={{ duration: 0.2 }}
-          className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
+          transition={{ duration: 0.3, type: "spring", damping: 25 }}
+          className="relative w-full max-w-md"
         >
-          {/* Header */}
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              aria-label="Закрыть"
-            >
-              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Content */}
-          <div className="p-6">
-            {submitStatus === "success" ? (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center py-8"
-              >
-                <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Спасибо!</h4>
-                <p className="text-gray-600">Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.</p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <p className="text-sm text-gray-600 mb-6">
-                  Оставьте свои контакты, и наш менеджер свяжется с вами для консультации.
-                </p>
-
-                {/* Поле имени */}
+          {/* Gradient Background Effect */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-3xl blur-xl opacity-30" />
+          
+          <div className="relative bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+            {/* Animated Header with Gradient */}
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600" />
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500"
+                animate={{
+                  x: ['0%', '100%', '0%'],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+              
+              <div className="relative px-8 py-6 flex items-center justify-between">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Ваше имя *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => handleNameChange(e.target.value)}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-colors ${
-                      errors.name ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                    }`}
-                    placeholder="Введите ваше имя"
-                    disabled={isSubmitting}
-                  />
-                  {errors.name && (
-                    <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-                  )}
-                </div>
-
-                {/* Поле телефона */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Номер телефона *
-                  </label>
-                  <div className="relative">
-                    {/* Выбор страны */}
-                    <button
-                      type="button"
-                      onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)}
-                      className="absolute left-0 top-0 h-full px-3 border-r border-gray-300 bg-gray-50 hover:bg-gray-100 transition-colors rounded-l-lg flex items-center gap-2"
-                    >
-                      <span className="text-lg">{selectedCountry.flag}</span>
-                      <span className="text-sm font-medium text-gray-700">{selectedCountry.code}</span>
-                      <svg 
-                        className={`w-4 h-4 text-gray-400 transition-transform ${isCountryDropdownOpen ? 'rotate-180' : ''}`} 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex items-center gap-3 mb-1"
+                  >
+                    <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                    </button>
-
-                    {/* Выпадающий список стран */}
-                    {isCountryDropdownOpen && (
-                      <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
-                        {countries.map((country) => (
-                          <button
-                            key={country.country}
-                            type="button"
-                            onClick={() => {
-                              setSelectedCountry(country);
-                              setIsCountryDropdownOpen(false);
-                              setFormData(prev => ({ ...prev, phone: "" })); // Очищаем номер при смене страны
-                            }}
-                            className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2 transition-colors"
-                          >
-                            <span className="text-lg">{country.flag}</span>
-                            <span className="text-sm font-medium text-gray-700">{country.code}</span>
-                            <span className="text-sm text-gray-600">{country.name}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Поле ввода номера */}
-                    <input
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => handlePhoneChange(e.target.value)}
-                      className={`w-full pl-24 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-colors ${
-                        errors.phone ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                      }`}
-                      placeholder={selectedCountry.mask.replace(/#+/g, (match) => '●'.repeat(match.length))}
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  {errors.phone && (
-                    <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
-                  )}
+                    </div>
+                    <h3 className="text-xl font-bold text-white">{title}</h3>
+                  </motion.div>
+                  <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-sm text-white/80"
+                  >
+                    Мы свяжемся с вами в течение часа
+                  </motion.p>
                 </div>
-
-                {submitStatus === "error" && (
-                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                    <p className="text-sm text-red-600">
-                      Произошла ошибка при отправке. Попробуйте еще раз.
-                    </p>
-                  </div>
-                )}
-
-                {/* Кнопка отправки */}
+                
                 <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:from-gray-400 disabled:to-gray-500 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
+                  onClick={onClose}
+                  className="p-2 hover:bg-white/20 rounded-xl transition-all duration-200 group"
+                  aria-label="Закрыть"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      Отправляем...
-                    </>
-                  ) : (
-                    "Отправить заявку"
-                  )}
+                  <svg className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
+              </div>
+            </div>
 
-                <p className="text-xs text-gray-500 text-center">
-                  Нажимая &quot;Отправить заявку&quot;, вы соглашаетесь с обработкой персональных данных
-                </p>
-              </form>
-            )}
+            {/* Content */}
+            <div className="p-8">
+              {submitStatus === "success" ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.5, type: "spring" }}
+                  className="text-center py-8"
+                >
+                  <motion.div 
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                    className="w-20 h-20 mx-auto bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-lg"
+                  >
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <motion.path 
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ delay: 0.3, duration: 0.5 }}
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={3} 
+                        d="M5 13l4 4L19 7" 
+                      />
+                    </svg>
+                  </motion.div>
+                  <motion.h4 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-3"
+                  >
+                    Заявка отправлена!
+                  </motion.h4>
+                  <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="text-gray-600 leading-relaxed"
+                  >
+                    Спасибо за обращение! Наш менеджер свяжется с вами в ближайшее время.
+                  </motion.p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-sm text-gray-600 leading-relaxed"
+                  >
+                    Оставьте свои контакты, и наш менеджер проконсультирует вас по всем вопросам сотрудничества.
+                  </motion.p>
+
+                  {/* Поле имени */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full" />
+                      Ваше имя
+                    </label>
+                    <div className="relative">
+                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                      </div>
+                      <input
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => {
+                          setFormData(prev => ({ ...prev, name: e.target.value }));
+                          if (errors.name) setErrors(prev => ({ ...prev, name: undefined }));
+                        }}
+                        className={`w-full pl-12 pr-4 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all duration-200 text-gray-900 placeholder:text-gray-400 ${
+                          errors.name 
+                            ? 'border-red-300 bg-red-50/50 focus:border-red-500 focus:ring-red-500/20' 
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                        placeholder="Иван Петров"
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                    {errors.name && (
+                      <motion.p 
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-2 text-sm text-red-600 flex items-center gap-1"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                        {errors.name}
+                      </motion.p>
+                    )}
+                  </motion.div>
+
+                  {/* Поле телефона */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                      Номер телефона
+                    </label>
+                    <div className="phone-input-modern">
+                      <PhoneInput
+                        defaultCountry="ru"
+                        value={formData.phone}
+                        onChange={(phone) => {
+                          setFormData(prev => ({ ...prev, phone }));
+                          if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
+                        }}
+                        className={errors.phone ? 'error' : ''}
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                    {errors.phone && (
+                      <motion.p 
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-2 text-sm text-red-600 flex items-center gap-1"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                        {errors.phone}
+                      </motion.p>
+                    )}
+                  </motion.div>
+
+                  {submitStatus === "error" && (
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="p-4 bg-gradient-to-r from-red-50 to-red-100/50 border-2 border-red-200 rounded-2xl flex items-start gap-3"
+                    >
+                      <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      </svg>
+                      <div>
+                        <p className="text-sm font-medium text-red-800">Ошибка отправки</p>
+                        <p className="text-sm text-red-600 mt-0.5">Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.</p>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Кнопка отправки */}
+                  <motion.button
+                    type="submit"
+                    disabled={isSubmitting}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full relative overflow-hidden bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl disabled:cursor-not-allowed group"
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      {isSubmitting ? (
+                        <>
+                          <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                          <span>Отправляем...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Отправить заявку</span>
+                          <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </>
+                      )}
+                    </span>
+                  </motion.button>
+
+                  <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-xs text-gray-500 text-center leading-relaxed"
+                  >
+                    Нажимая &quot;Отправить заявку&quot;, вы соглашаетесь с{' '}
+                    <a href="/privacy" className="text-cyan-600 hover:text-cyan-700 underline">
+                      политикой конфиденциальности
+                    </a>
+                  </motion.p>
+                </form>
+              )}
+            </div>
           </div>
         </motion.div>
       </motion.div>
+
+      <style jsx global>{`
+        .phone-input-modern .react-international-phone-input-container {
+          width: 100%;
+        }
+        
+        .phone-input-modern .react-international-phone-input {
+          width: 100%;
+          padding: 1rem 1rem 1rem 3.5rem;
+          border: 2px solid #e5e7eb;
+          border-radius: 1rem;
+          font-size: 1rem;
+          transition: all 0.2s;
+          color: #111827;
+        }
+        
+        .phone-input-modern .react-international-phone-input:hover {
+          border-color: #d1d5db;
+        }
+        
+        .phone-input-modern .react-international-phone-input:focus {
+          outline: none;
+          border-color: #06b6d4;
+          box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1);
+        }
+        
+        .phone-input-modern.error .react-international-phone-input {
+          border-color: #fca5a5;
+          background-color: rgba(254, 242, 242, 0.5);
+        }
+        
+        .phone-input-modern.error .react-international-phone-input:focus {
+          border-color: #ef4444;
+          box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+        
+        .phone-input-modern .react-international-phone-country-selector-button {
+          padding: 0.5rem 0.75rem;
+          border-right: 2px solid #e5e7eb;
+          background: #f9fafb;
+          border-radius: 1rem 0 0 1rem;
+          transition: background 0.2s;
+        }
+        
+        .phone-input-modern .react-international-phone-country-selector-button:hover {
+          background: #f3f4f6;
+        }
+        
+        .phone-input-modern .react-international-phone-country-selector-dropdown {
+          border: 2px solid #e5e7eb;
+          border-radius: 1rem;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+          max-height: 16rem;
+        }
+        
+        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item:hover {
+          background: #f0f9ff;
+        }
+      `}</style>
     </AnimatePresence>
   );
 }

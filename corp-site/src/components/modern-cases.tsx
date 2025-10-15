@@ -2,6 +2,7 @@
 
 import { motion, useInView, useMotionValue, useSpring, animate } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { usePopup } from "@/contexts/popup-context";
 
 function AnimatedCounter({ value, delay = 0, suffix = "" }: { value: number; delay?: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -352,6 +353,7 @@ function SuccessMetrics() {
 export function ModernCases() {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { once: true, margin: "-100px" });
+  const { openPopup } = usePopup();
 
   const cases = [
     {
@@ -549,6 +551,7 @@ export function ModernCases() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.button
+              onClick={() => openPopup("Получить прогноз для моего объекта")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold hover:from-emerald-400 hover:to-teal-500 transition-all shadow-lg"
@@ -557,14 +560,14 @@ export function ModernCases() {
             </motion.button>
             
             <motion.button
+              onClick={() => openPopup("Узнать больше о кейсах")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 rounded-xl border border-white/30 text-foreground font-semibold hover:bg-white/10 transition-all"
             >
               Смотреть больше кейсов
             </motion.button>
-          </div>
-        </motion.div>
+          </div>        </motion.div>
       </div>
     </section>
   );
