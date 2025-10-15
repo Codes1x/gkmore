@@ -391,6 +391,14 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
 
       <style jsx global>{`
         
+        /* Общие стили для флагов */
+        .react-international-phone-flag {
+          display: inline-block !important;
+          background-size: contain !important;
+          background-position: center !important;
+          background-repeat: no-repeat !important;
+        }
+        
         /* Контейнер телефонного инпута */
         .phone-input-modern {
           position: relative;
@@ -437,6 +445,9 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         
         /* Кнопка выбора страны */
         .phone-input-modern .react-international-phone-country-selector-button {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
           padding: 0.75rem !important;
           border-right: 2px solid #e5e7eb !important;
           background: #f9fafb !important;
@@ -444,11 +455,25 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
           transition: background 0.2s !important;
           height: 100% !important;
           border: none !important;
-          min-width: 4rem !important;
+          min-width: 4.5rem !important;
+          gap: 0.5rem !important;
         }
         
         .phone-input-modern .react-international-phone-country-selector-button:hover {
           background: #f3f4f6 !important;
+        }
+        
+        /* Флаг в кнопке выбора страны */
+        .phone-input-modern .react-international-phone-country-selector-button .react-international-phone-flag {
+          flex-shrink: 0 !important;
+          width: 24px !important;
+          height: 18px !important;
+        }
+        
+        /* Стрелка dropdown */
+        .phone-input-modern .react-international-phone-country-selector-button__dropdown-arrow {
+          margin-left: 0.25rem !important;
+          color: #6b7280 !important;
         }
         
         /* Выпадающий список стран */
@@ -465,6 +490,14 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
           overflow-y: auto !important;
           background: white !important;
           z-index: 10000 !important;
+          padding: 0.5rem 0 !important;
+        }
+        
+        /* Список внутри dropdown */
+        .phone-input-modern .react-international-phone-country-selector-dropdown__list {
+          list-style: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
         }
         
         /* Элементы списка стран */
@@ -474,11 +507,37 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
           transition: background 0.15s !important;
           display: flex !important;
           align-items: center !important;
-          gap: 0.5rem !important;
+          gap: 0.75rem !important;
+          border: none !important;
+          font-size: 0.9rem !important;
         }
         
         .phone-input-modern .react-international-phone-country-selector-dropdown__list-item:hover {
           background: #f0f9ff !important;
+        }
+        
+        /* Флаг страны в списке */
+        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item .react-international-phone-flag {
+          flex-shrink: 0 !important;
+          width: 24px !important;
+          height: 18px !important;
+          margin-right: 0.5rem !important;
+        }
+        
+        /* Название страны в списке */
+        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item__country-name {
+          flex: 1 !important;
+          text-align: left !important;
+          font-size: 0.9rem !important;
+          color: #374151 !important;
+        }
+        
+        /* Код страны в списке */
+        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item__dial-code {
+          flex-shrink: 0 !important;
+          color: #6b7280 !important;
+          font-size: 0.85rem !important;
+          margin-left: auto !important;
         }
         
         /* Скроллбар для списка стран */
