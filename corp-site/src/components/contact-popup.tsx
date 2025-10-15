@@ -294,12 +294,13 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
+                    className="mb-20"
                   >
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
                       Номер телефона
                     </label>
-                    <div className="phone-input-modern">
+                    <div className="phone-input-modern relative z-20">
                       <PhoneInput
                         defaultCountry="ru"
                       value={formData.phone}
@@ -407,6 +408,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         .phone-input-modern .react-international-phone-input-container {
           width: 100%;
           position: relative;
+          z-index: 1000;
         }
         
         /* Основное поле ввода */
@@ -486,10 +488,10 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
           border: 2px solid #e5e7eb !important;
           border-radius: 1rem !important;
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-          max-height: 16rem !important;
+          max-height: 14rem !important;
           overflow-y: auto !important;
           background: white !important;
-          z-index: 10000 !important;
+          z-index: 20000 !important;
           padding: 0.5rem 0 !important;
         }
         
