@@ -279,7 +279,7 @@ function PaymentTimeline() {
                   step.status === 'completed' 
                     ? 'bg-gradient-to-br from-green-400 to-emerald-500' 
                     : step.status === 'current'
-                      ? 'bg-gradient-to-br from-cyan-400 to-blue-500 animate-pulse'
+                      ? 'bg-gradient-to-br from-blue-500 to-cyan-600 animate-pulse'
                       : 'bg-gradient-to-br from-gray-400 to-gray-500'
                 }`}
               >
