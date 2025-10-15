@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { PhoneInput } from 'react-international-phone';
 
 interface ContactPopupProps {
@@ -30,6 +30,21 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastActiveEl = useRef<HTMLElement | null>(null);
   const closeTimer = useRef<number | null>(null);
+
+  const reduceMotion = useReducedMotion();
+
+  const liveMessage = isSubmitting
+    ? 'Отправляем…'
+    : (() => {
+        switch (submitStatus) {
+          case 'success':
+            return 'Заявка отправлена';
+          case 'error':
+            return 'Ошибка отправки';
+          default:
+            return '';
+        }
+      })();
 
   // Автоматический скролл к началу при открытии popup
   useEffect(() => {
@@ -192,7 +207,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
             initial={{ opacity: 0, scale: 0.85, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}
             className="relative w-full max-w-md my-8"
             onClick={(e) => e.stopPropagation()}
           >
@@ -239,15 +254,14 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                   </motion.p>
                 </div>
                 
-            <button
-              onClick={onClose}
-                  className="p-2 hover:bg-white/20 rounded-xl transition-all duration-200 group"
-              aria-label="Закрыть"
-            >
-                  <svg className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            <div className="absolute right-3 top-3 z-10">
+              <button type="button" onClick={onClose} aria-label="Закрыть" className="rounded-full p-2 bg-white/10 hover:bg-white/20 transition-colors">
+                {/* svg x icon */}
+                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
               </div>
           </div>
 
@@ -296,7 +310,8 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                   </motion.p>
               </motion.div>
             ) : (
-                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate aria-busy={isSubmitting}>
+                  <div aria-live="polite" className="sr-only">{liveMessage}</div>
                   <motion.p 
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -523,14 +538,13 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
           align-items: center !important;
           justify-content: center !important;
           padding: 0.75rem !important;
-          border-right: 2px solid #e5e7eb !important;
           background: #f9fafb !important;
           border-radius: 1rem 0 0 1rem !important;
           transition: background 0.2s !important;
           height: 100% !important;
-          border: none !important;
           min-width: 4.5rem !important;
           gap: 0.5rem !important;
+          border-right: 2px solid #e5e7eb !important;
         }
         
         .phone-input-modern .react-international-phone-country-selector-button:hover {
