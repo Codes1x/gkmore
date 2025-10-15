@@ -216,7 +216,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
           
           <div className="relative bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20">
             {/* Animated Header with Gradient */}
-            <div className="relative overflow-hidden">
+            <div className="relative overflow-hidden rounded-t-3xl">
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600" />
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500"
@@ -501,7 +501,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         /* Основное поле ввода */
         .phone-input-modern .react-international-phone-input {
           width: 100%;
-          padding: 1rem 1rem 1rem 4.5rem !important;
+          padding: 1rem 1rem 1rem 3.75rem !important;
           border: 2px solid #e5e7eb !important;
           border-radius: 1rem !important;
           font-size: 1rem !important;
@@ -537,13 +537,13 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          padding: 0.75rem !important;
+          padding: 0.5rem 0.625rem !important;
           background: #f9fafb !important;
           border-radius: 1rem 0 0 1rem !important;
           transition: background 0.2s !important;
           height: 100% !important;
-          min-width: 4.5rem !important;
-          gap: 0.5rem !important;
+          min-width: 3.5rem !important;
+          gap: 0.25rem !important;
           border-right: 2px solid #e5e7eb !important;
         }
         
@@ -560,7 +560,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         
         /* Стрелка dropdown */
         .phone-input-modern .react-international-phone-country-selector-button__dropdown-arrow {
-          margin-left: 0.25rem !important;
+          margin-left: 0.125rem !important;
           color: #6b7280 !important;
         }
         
