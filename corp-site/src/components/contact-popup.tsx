@@ -325,28 +325,25 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 }}
                   >
-                    <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <label htmlFor="contact-name" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full" />
-                      Ваше имя
+                      Ваше имя <span className="text-red-500">*</span>
                   </label>
-                    <div className="relative">
-                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                      </div>
                   <input
+                    id="contact-name"
                     type="text"
                     name="name"
+                    required
                     autoComplete="given-name"
                     aria-invalid={!!errors.name}
                     aria-describedby={errors.name ? 'name-error' : undefined}
+                    aria-required="true"
                     value={formData.name}
                         onChange={(e) => {
                           setFormData(prev => ({ ...prev, name: e.target.value }));
                           if (errors.name) setErrors(prev => ({ ...prev, name: undefined }));
                         }}
-                        className={`w-full pl-12 pr-4 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all duration-200 text-gray-900 placeholder:text-gray-400 ${
+                        className={`w-full px-4 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all duration-200 text-gray-900 placeholder:text-gray-400 ${
                           errors.name 
                             ? 'border-red-300 bg-red-50/50 focus:border-red-500 focus:ring-red-500/20' 
                             : 'border-gray-200 hover:border-gray-300'
@@ -354,7 +351,6 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                         placeholder="Иван Петров"
                     disabled={isSubmitting}
                   />
-                    </div>
                   {errors.name && (
                       <motion.p 
                         id="name-error"
@@ -376,28 +372,25 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                    <label htmlFor="contact-phone" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
-                      Номер телефона
+                      Номер телефона <span className="text-red-500">*</span>
                     </label>
-                    <div className="relative">
-                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                      </div>
                       <input
+                        id="contact-phone"
                         type="tel"
                         name="phone"
+                        required
                         autoComplete="tel"
                         aria-invalid={!!errors.phone}
                         aria-describedby={errors.phone ? 'phone-error' : undefined}
+                        aria-required="true"
                         value={formData.phone}
                         onChange={(e) => {
                           setFormData(prev => ({ ...prev, phone: e.target.value }));
                           if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
                         }}
-                        className={`w-full pl-12 pr-4 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all duration-200 text-gray-900 placeholder:text-gray-400 ${
+                        className={`w-full px-4 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all duration-200 text-gray-900 placeholder:text-gray-400 ${
                           errors.phone 
                             ? 'border-red-300 bg-red-50/50 focus:border-red-500 focus:ring-red-500/20' 
                             : 'border-gray-200 hover:border-gray-300'
@@ -405,7 +398,6 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                         placeholder="+7 (900) 123-45-67"
                         disabled={isSubmitting}
                       />
-                    </div>
                   {errors.phone && (
                       <motion.p 
                         id="phone-error"
