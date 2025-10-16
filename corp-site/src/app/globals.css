@@ -21,13 +21,18 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Оптимизация производительности для всех элементов */
-* {
+/* Оптимизация производительности только для анимированных элементов */
+.animate-in,
+.animate-out,
+[class*="animate-"],
+[class*="transition-"] {
   /* Использование GPU для трансформаций и анимаций */
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  
+}
+
+* {
   /* Оптимизация композитинга */
   will-change: auto;
 }

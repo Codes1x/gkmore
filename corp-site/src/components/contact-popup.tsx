@@ -57,18 +57,33 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
     if (isOpen) {
       lastActiveEl.current = document.activeElement as HTMLElement | null;
 
-      const prevOverflow = document.body.style.overflow;
-      const prevTouchAction = document.body.style.touchAction;
+      // Сохраняем текущие значения
+      const prevBodyOverflow = document.body.style.overflow;
+      const prevBodyTouchAction = document.body.style.touchAction;
+      const prevHtmlOverflow = document.documentElement.style.overflow;
+      const prevBodyPaddingRight = document.body.style.paddingRight;
 
+      // Вычисляем ширину scrollbar
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+      // Блокируем скролл на html и body
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
       document.body.style.touchAction = 'none';
+
+      // Компенсируем ширину scrollbar чтобы избежать "прыжка"
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
 
       // Начальный фокус внутрь диалога
       setTimeout(() => dialogRef.current?.focus(), 0);
 
       return () => {
-        document.body.style.overflow = prevOverflow;
-        document.body.style.touchAction = prevTouchAction;
+        document.documentElement.style.overflow = prevHtmlOverflow;
+        document.body.style.overflow = prevBodyOverflow;
+        document.body.style.touchAction = prevBodyTouchAction;
+        document.body.style.paddingRight = prevBodyPaddingRight;
         lastActiveEl.current?.focus?.();
       };
     }
