@@ -17,12 +17,8 @@ const nextConfig: NextConfig = {
   // Компрессия
   compress: true,
 
-  // Оптимизация сборки
-  swcMinify: true,
-
   // Экспериментальные оптимизации
   experimental: {
-    optimizeCss: true, // Минификация CSS
     optimizePackageImports: ['lucide-react', 'framer-motion'], // Оптимизация импортов
   },
 
