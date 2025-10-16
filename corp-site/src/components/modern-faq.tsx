@@ -417,7 +417,7 @@ export function ModernFAQ() {
               </motion.a>
               
               <motion.a
-                href="tel:+7999123456"
+                href="tel:+79395550197"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 className="px-6 py-3 border border-white/30 text-foreground font-medium rounded-xl hover:bg-white/10 transition-all duration-300"

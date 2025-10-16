@@ -230,19 +230,19 @@ export function ModernFooter() {
             >
               <div className="flex items-center gap-3 text-sm">
                 <span className="text-muted-foreground">📞</span>
-                <a href="tel:+78625550000" className="text-foreground hover:text-cyan-400 transition-colors">
-                  +7 (862) 555-00-00
+                <a href="tel:+79395550197" className="text-foreground hover:text-cyan-400 transition-colors">
+                  +7 (939) 555-01-97
                 </a>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <span className="text-muted-foreground">✉️</span>
-                <a href="mailto:partnership@gkmore.ru" className="text-foreground hover:text-cyan-400 transition-colors">
-                  partnership@gkmore.ru
+                <a href="mailto:info@seagroup-sochi.ru" className="text-foreground hover:text-cyan-400 transition-colors">
+                  info@seagroup-sochi.ru
                 </a>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <span className="text-muted-foreground">📍</span>
-                <span className="text-foreground">г. Сочи, ул. Курортный проспект, 123</span>
+                <span className="text-foreground">г. Сочи, пгт. Дагомыс, ш. Барановское 8А</span>
               </div>
             </motion.div>
           </motion.div>

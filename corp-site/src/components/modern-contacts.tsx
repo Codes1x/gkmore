@@ -164,28 +164,28 @@ function ContactInfo() {
 
   const contacts = [
     {
-      name: "Sea Family Resort & Spa",
-      address: "1-я линия у моря, Сочи",
-      phone: "+7 (862) 123-45-67",
-      email: "info@seafamily.ru",
+      name: "Апарт-отель Sea Family",
+      address: "г. Сочи, пгт. Дагомыс, ш. Барановское 8А",
+      phone: "+7 (939) 555-01-97",
+      email: "info@seagroup-sochi.ru",
       icon: "🏖️",
       color: "cyan",
       type: "hotel"
     },
     {
-      name: "Лучезарный Резорт",
-      address: "4 минуты пешком от моря, Сочи",
-      phone: "+7 (862) 765-43-21",
-      email: "info@luchezarny.ru",
+      name: "Апарт-отель Лучезарный",
+      address: "г. Сочи, пгт. Дагомыс, ш. Барановское 8А",
+      phone: "+7 (939) 555-01-97",
+      email: "info@seagroup-sochi.ru",
       icon: "✨",
       color: "blue",
       type: "hotel"
     },
     {
     name: "Головной офис",
-    address: "г. Сочи, ул. Курортный проспект, 123",
-    phone: "+7 (862) 555-00-00",
-    email: "partnership@gkmore.ru",
+    address: "г. Сочи, пгт. Дагомыс, ш. Барановское 8А",
+    phone: "+7 (939) 555-01-97",
+    email: "info@seagroup-sochi.ru",
     hours: "Пн-Пт: 9:00-18:00",
     icon: "🏢",
       color: "purple",
@@ -398,7 +398,7 @@ export function ModernContacts() {
               </motion.a>
               
               <motion.a
-                href="tel:+78625550000"
+                href="tel:+79395550197"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 className="px-6 py-3 border border-white/30 text-foreground font-medium rounded-xl hover:bg-white/10 transition-all duration-300"

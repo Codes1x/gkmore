@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://seagroup-sochi.ru"),
   title: {
     default: "ГК Море — профессиональный оператор апарт-отелей в Сочи",
     template: "%s | ГК Море",
@@ -25,18 +25,18 @@ export const metadata: Metadata = {
   description:
     "Профессиональный оператор апарт-отелей в Сочи. Обеспечиваем собственникам стабильную доходность и прозрачность управления. Модель ревшара 30%.",
   robots: {
-    index: false,
-    follow: false,
-    noarchive: true,
-    nosnippet: true,
-    noimageindex: true,
-    nocache: true,
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
   openGraph: {
     title: "ГК Море — профессиональный оператор апарт-отелей в Сочи",
     description:
       "Профессиональный оператор апарт-отелей в Сочи. Обеспечиваем собственникам стабильную доходность и прозрачность управления.",
-    url: "/",
+    url: "https://seagroup-sochi.ru",
     siteName: "ГК Море",
     images: [
       { url: "/og.png", width: 1200, height: 630, alt: "ГК Море" },
@@ -69,15 +69,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <head>
-        {/* Дополнительная защита от индексации */}
-        <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, nocache" />
-        <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
-        <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
-        <meta name="yandexbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
-        <meta name="slurp" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
-        <meta httpEquiv="X-Robots-Tag" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

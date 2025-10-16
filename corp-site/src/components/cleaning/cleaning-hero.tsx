@@ -58,12 +58,12 @@ export function CleaningHero() {
             </motion.button>
             
             <motion.a
-              href="tel:+79000016658"
+              href="tel:+79395550197"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white/20 hover:bg-white/30 text-white font-semibold py-4 px-8 rounded-xl text-lg backdrop-blur-sm border border-white/30 transition-all duration-300"
             >
-              📞 +7 (900) 001-66-58
+              📞 +7 (939) 555-01-97
             </motion.a>
           </motion.div>
         </motion.div>

@@ -1,28 +1,6 @@
-# Временная блокировка индексации
+# Разрешаем индексацию всем поисковым системам
 User-agent: *
-Disallow: /
+Allow: /
 
-# Блокируем все основные поисковые боты
-User-agent: Googlebot
-Disallow: /
-
-User-agent: Bingbot
-Disallow: /
-
-User-agent: Slurp
-Disallow: /
-
-User-agent: DuckDuckBot
-Disallow: /
-
-User-agent: Baiduspider
-Disallow: /
-
-User-agent: YandexBot
-Disallow: /
-
-User-agent: facebookexternalhit
-Disallow: /
-
-# Нет sitemap пока сайт закрыт
-# Sitemap: https://example.com/sitemap.xml
+# Sitemap
+Sitemap: https://seagroup-sochi.ru/sitemap.xml
