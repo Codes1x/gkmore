@@ -188,7 +188,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[9999] overflow-y-auto overscroll-contain"
+          className="fixed inset-0 z-[9999] overflow-y-auto overscroll-contain popup-scrollbar-hidden"
           onClick={onClose}
       >
         {/* Backdrop with Glass Morphism */}
@@ -497,6 +497,16 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
           clip: rect(0, 0, 0, 0);
           white-space: nowrap;
           border-width: 0;
+        }
+        
+        /* Скрытие полосы прокрутки для popup контейнера */
+        .popup-scrollbar-hidden {
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        .popup-scrollbar-hidden::-webkit-scrollbar {
+          display: none; /* Chrome, Safari, Opera */
         }
       `}</style>
     </AnimatePresence>
