@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { PhoneInput } from 'react-international-phone';
 
 interface ContactPopupProps {
   isOpen: boolean;
@@ -381,23 +380,32 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
                       <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
                       Номер телефона
                     </label>
-                    <div className={`phone-input-modern relative z-20 ${errors.phone ? 'error' : ''}`}>
-                      <PhoneInput
-                        defaultCountry="ru"
-                      value={formData.phone}
-                        onChange={(phone) => {
-                          setFormData(prev => ({ ...prev, phone }));
+                    <div className="relative">
+                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                      </div>
+                      <input
+                        type="tel"
+                        name="phone"
+                        autoComplete="tel"
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={errors.phone ? 'phone-error' : undefined}
+                        value={formData.phone}
+                        onChange={(e) => {
+                          setFormData(prev => ({ ...prev, phone: e.target.value }));
                           if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
                         }}
-                        inputProps={{
-                          name: 'phone',
-                          autoComplete: 'tel',
-                          'aria-invalid': !!errors.phone,
-                          'aria-describedby': errors.phone ? 'phone-error' : undefined,
-                        }}
-                      disabled={isSubmitting}
-                    />
-                  </div>
+                        className={`w-full pl-12 pr-4 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all duration-200 text-gray-900 placeholder:text-gray-400 ${
+                          errors.phone 
+                            ? 'border-red-300 bg-red-50/50 focus:border-red-500 focus:ring-red-500/20' 
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                        placeholder="+7 (900) 123-45-67"
+                        disabled={isSubmitting}
+                      />
+                    </div>
                   {errors.phone && (
                       <motion.p 
                         id="phone-error"
@@ -478,184 +486,17 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
       )}
 
       <style jsx global>{`
-        
-        /* Общие стили для флагов */
-        .react-international-phone-flag {
-          display: inline-block !important;
-          background-size: contain !important;
-          background-position: center !important;
-          background-repeat: no-repeat !important;
-        }
-        
-        /* Контейнер телефонного инпута */
-        .phone-input-modern {
-          position: relative;
-        }
-        
-        .phone-input-modern .react-international-phone-input-container {
-          width: 100%;
-          position: relative;
-          z-index: 1000;
-        }
-        
-        /* Основное поле ввода */
-        .phone-input-modern .react-international-phone-input {
-          width: 100%;
-          padding: 1rem 1rem 1rem 3.75rem !important;
-          border: 2px solid #e5e7eb !important;
-          border-radius: 1rem !important;
-          font-size: 1rem !important;
-          transition: all 0.2s !important;
-          color: #111827 !important;
-          background: white !important;
-          height: auto !important;
-        }
-        
-        .phone-input-modern .react-international-phone-input:hover {
-          border-color: #d1d5db !important;
-        }
-        
-        .phone-input-modern .react-international-phone-input:focus {
-          outline: none !important;
-          border-color: #06b6d4 !important;
-          box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1) !important;
-        }
-        
-        /* Состояние ошибки */
-        .phone-input-modern.error .react-international-phone-input {
-          border-color: #fca5a5 !important;
-          background-color: rgba(254, 242, 242, 0.5) !important;
-        }
-        
-        .phone-input-modern.error .react-international-phone-input:focus {
-          border-color: #ef4444 !important;
-          box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
-        }
-        
-        /* Кнопка выбора страны */
-        .phone-input-modern .react-international-phone-country-selector-button {
-          display: flex !important;
-          align-items: center !important;
-          justify-content: center !important;
-          padding: 0.5rem 0.625rem !important;
-          background: #f9fafb !important;
-          border-radius: 1rem 0 0 1rem !important;
-          transition: background 0.2s !important;
-          height: 100% !important;
-          min-width: 3.5rem !important;
-          gap: 0.25rem !important;
-          border-right: 2px solid #e5e7eb !important;
-        }
-        
-        .phone-input-modern .react-international-phone-country-selector-button:hover {
-          background: #f3f4f6 !important;
-        }
-        
-        /* Флаг в кнопке выбора страны */
-        .phone-input-modern .react-international-phone-country-selector-button .react-international-phone-flag {
-          flex-shrink: 0 !important;
-          width: 24px !important;
-          height: 18px !important;
-        }
-        
-        /* Стрелка dropdown */
-        .phone-input-modern .react-international-phone-country-selector-button__dropdown-arrow {
-          margin-left: 0.125rem !important;
-          color: #6b7280 !important;
-        }
-        
-        /* Выпадающий список стран */
-        .phone-input-modern .react-international-phone-country-selector-dropdown {
-          position: absolute !important;
-          top: 100% !important;
-          left: 0 !important;
-          right: 0 !important;
-          margin-top: 0.5rem !important;
-          border: 2px solid #e5e7eb !important;
-          border-radius: 1rem !important;
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-          max-height: 14rem !important;
-          overflow-y: auto !important;
-          background: white !important;
-          z-index: 20000 !important;
-          padding: 0.5rem 0 !important;
-        }
-        
-        /* Список внутри dropdown */
-        .phone-input-modern .react-international-phone-country-selector-dropdown__list {
-          list-style: none !important;
-          margin: 0 !important;
-          padding: 0 !important;
-        }
-        
-        /* Элементы списка стран */
-        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item {
-          padding: 0.75rem 1rem !important;
-          cursor: pointer !important;
-          transition: background 0.15s !important;
-          display: flex !important;
-          align-items: center !important;
-          gap: 0.75rem !important;
-          border: none !important;
-          font-size: 0.9rem !important;
-        }
-        
-        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item:hover {
-          background: #f0f9ff !important;
-        }
-        
-        /* Флаг страны в списке */
-        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item .react-international-phone-flag {
-          flex-shrink: 0 !important;
-          width: 24px !important;
-          height: 18px !important;
-          margin-right: 0.5rem !important;
-        }
-        
-        /* Название страны в списке */
-        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item__country-name {
-          flex: 1 !important;
-          text-align: left !important;
-          font-size: 0.9rem !important;
-          color: #374151 !important;
-        }
-        
-        /* Код страны в списке */
-        .phone-input-modern .react-international-phone-country-selector-dropdown__list-item__dial-code {
-          flex-shrink: 0 !important;
-          color: #6b7280 !important;
-          font-size: 0.85rem !important;
-          margin-left: auto !important;
-        }
-        
-        /* Скроллбар для списка стран */
-        .phone-input-modern .react-international-phone-country-selector-dropdown::-webkit-scrollbar {
-          width: 6px;
-        }
-        
-        .phone-input-modern .react-international-phone-country-selector-dropdown::-webkit-scrollbar-track {
-          background: #f1f5f9;
-          border-radius: 10px;
-        }
-        
-        .phone-input-modern .react-international-phone-country-selector-dropdown::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
-          border-radius: 10px;
-        }
-        
-        .phone-input-modern .react-international-phone-country-selector-dropdown::-webkit-scrollbar-thumb:hover {
-          background: #94a3b8;
-        }
-        
-        /* Адаптивность для мобильных */
-        @media (max-width: 640px) {
-          .phone-input-modern .react-international-phone-input {
-            font-size: 16px !important; /* Предотвращает зум на iOS */
-          }
-          
-          .phone-input-modern .react-international-phone-country-selector-dropdown {
-            max-height: 12rem !important;
-          }
+        /* Screen reader only class */
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border-width: 0;
         }
       `}</style>
     </AnimatePresence>
