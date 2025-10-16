@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// Простая реализация отправки email через nodemailer
-// Для production рекомендуется использовать сервисы типа SendGrid, Mailgun, или Resend
+import TelegramBot from 'node-telegram-bot-api';
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, phone, country } = await request.json();
+    const { name, phone } = await request.json();
 
     // Валидация данных
     if (!name || !phone) {
@@ -15,29 +13,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Здесь будет логика отправки email
-    // Для демонстрации используем простую заглушку
-    
-    const emailData = {
-      to: 'maksaksyonov@mail.ru',
-      subject: 'Новая заявка с сайта ГК Море',
-      html: `
-        <h2>Новая заявка с сайта ГК Море</h2>
-        <p><strong>Имя:</strong> ${name}</p>
-        <p><strong>Телефон:</strong> ${phone}</p>
-        <p><strong>Страна:</strong> ${country}</p>
-        <p><strong>Дата:</strong> ${new Date().toLocaleString('ru-RU')}</p>
-        <hr>
-        <p><small>Это автоматическое сообщение с сайта ГК Море</small></p>
-      `
-    };
+    // Проверка наличия токена и chat ID
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
 
-    // Здесь должен быть код отправки email
-    // Для демонстрации просто логируем данные
-    console.log('Отправка email:', emailData);
+    if (!botToken || !chatId) {
+      console.error('Не настроены переменные TELEGRAM_BOT_TOKEN или TELEGRAM_CHAT_ID');
+      return NextResponse.json(
+        { error: 'Сервер не настроен для отправки сообщений' },
+        { status: 500 }
+      );
+    }
 
-    // Симуляция отправки с небольшой задержкой
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Создаем бота
+    const bot = new TelegramBot(botToken, { polling: false });
+
+    // Форматируем сообщение в Markdown
+    const message = `
+🌊 *Новая заявка с сайта ГК Море*
+
+👤 *Имя:* ${name}
+📱 *Телефон:* ${phone}
+🕐 *Дата:* ${new Date().toLocaleString('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })}
+
+━━━━━━━━━━━━━━━━━━
+_Автоматическое сообщение с формы обратной связи_
+    `.trim();
+
+    // Отправляем сообщение в Telegram
+    await bot.sendMessage(chatId, message, {
+      parse_mode: 'Markdown'
+    });
+
+    console.log('✅ Заявка отправлена в Telegram:', { name, phone });
 
     // Возвращаем успешный ответ
     return NextResponse.json(
@@ -49,45 +63,10 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    console.error('Ошибка обработки заявки:', error);
+    console.error('❌ Ошибка отправки в Telegram:', error);
     return NextResponse.json(
-      { error: 'Внутренняя ошибка сервера' },
+      { error: 'Не удалось отправить заявку. Попробуйте позже.' },
       { status: 500 }
     );
   }
 }
-
-// Для более надежной отправки email, добавьте эту функцию:
-/*
-import nodemailer from 'nodemailer';
-
-async function sendEmail(name: string, phone: string, country: string) {
-  // Настройки SMTP (замените на ваши)
-  const transporter = nodemailer.createTransporter({
-    host: 'smtp.mail.ru', // или другой SMTP сервер
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USER, // ваш email
-      pass: process.env.EMAIL_PASS, // пароль приложения
-    },
-  });
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: 'maksaksyonov@mail.ru',
-    subject: 'Новая заявка с сайта ГК Море',
-    html: `
-      <h2>Новая заявка с сайта ГК Море</h2>
-      <p><strong>Имя:</strong> ${name}</p>
-      <p><strong>Телефон:</strong> ${phone}</p>
-      <p><strong>Страна:</strong> ${country}</p>
-      <p><strong>Дата:</strong> ${new Date().toLocaleString('ru-RU')}</p>
-      <hr>
-      <p><small>Это автоматическое сообщение с сайта ГК Море</small></p>
-    `
-  };
-
-  await transporter.sendMail(mailOptions);
-}
-*/
