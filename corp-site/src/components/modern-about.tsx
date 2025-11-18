@@ -52,6 +52,8 @@ function CompanyCard({ name, description, icon, stats, color, delay = 0, hasButt
     <motion.a
       href={hasButton ? buttonLink : "#"}
       ref={ref}
+      target="_blank"
+      rel="noopener noreferrer"
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ 
@@ -198,6 +200,8 @@ export function ModernAbout() {
       description: "Премиальный отель на первой линии",
       icon: "🏖️",
       color: 'cyan' as const,
+      hasButton: true,
+      buttonLink: "https://seafamily.ru",
       stats: [
         { label: "Номеров", value: "122" },
         { label: "ADR", value: "10,114 ₽" },
@@ -210,6 +214,8 @@ export function ModernAbout() {
       description: "Бутик-отель с апартаментами",
       icon: "🏢",
       color: 'blue' as const,
+      hasButton: true,
+      buttonLink: "https://лучезарный.рус",
       stats: [
         { label: "Номеров", value: "38" },
         { label: "ADR", value: "18,861 ₽" },
