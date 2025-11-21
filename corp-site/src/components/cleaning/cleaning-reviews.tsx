@@ -93,20 +93,68 @@ export function CleaningReviews() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
+          className="text-center mt-12 space-y-10"
         >
-          <div className="inline-flex items-center gap-4 p-6 bg-teal-50 rounded-2xl">
-            <div className="text-3xl">📊</div>
-            <div className="text-left">
-              <div className="font-semibold text-gray-900">4.9/5</div>
-              <div className="text-sm text-gray-600">Средняя оценка клиентов</div>
+          <div className="inline-flex flex-col sm:flex-row items-center gap-6 p-6 bg-teal-50 rounded-2xl">
+            <div className="flex items-center gap-4">
+              <div className="text-3xl">📊</div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">4.9/5</div>
+                <div className="text-sm text-gray-600">Средняя оценка клиентов</div>
+              </div>
             </div>
-            <div className="text-3xl">👥</div>
-            <div className="text-left">
-              <div className="font-semibold text-gray-900">500+</div>
-              <div className="text-sm text-gray-600">Довольных клиентов</div>
+            <div className="flex items-center gap-4">
+              <div className="text-3xl">👥</div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">500+</div>
+                <div className="text-sm text-gray-600">Довольных клиентов</div>
+              </div>
             </div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="w-full"
+          >
+            <div className="bg-gray-50 rounded-2xl p-4 sm:p-6 shadow-lg max-w-[680px] mx-auto w-full">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                <div className="text-left">
+                  <h3 className="text-xl font-semibold text-gray-900">Отзывы на Яндекс.Картах</h3>
+                  <p className="text-sm text-gray-600">Живые отзывы клиентов о нашей работе</p>
+                </div>
+                <a
+                  href="https://yandex.ru/maps/org/klining_more/25613016887/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-teal-600 hover:text-teal-700 text-sm font-medium"
+                >
+                  Открыть на Яндекс.Картах →
+                </a>
+              </div>
+
+              <div className="relative w-full pb-[140%] sm:pb-[120%] lg:pb-[115%] xl:pb-[105%]">
+                <iframe
+                  src="https://yandex.ru/maps-reviews-widget/25613016887?comments"
+                  title="Отзывы Клининг Море"
+                  className="absolute inset-0 w-full h-full rounded-2xl border border-gray-200 bg-white"
+                  allowFullScreen
+                />
+              </div>
+
+              <p className="text-[10px] text-center text-gray-400 mt-4">
+                <a
+                  href="https://yandex.ru/maps/org/klining_more/25613016887/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-teal-500 transition-colors"
+                >
+                  Клининг Море на карте Сочи — Яндекс Карты
+                </a>
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

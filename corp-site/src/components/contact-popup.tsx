@@ -7,11 +7,13 @@ interface ContactPopupProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
+  source?: string;
 }
 
 interface FormData {
   name: string;
   phone: string;
+  source?: string;
 }
 
 interface FormErrors {
@@ -19,8 +21,8 @@ interface FormErrors {
   phone?: string;
 }
 
-export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с нами" }: ContactPopupProps) {
-  const [formData, setFormData] = useState<FormData>({ name: "", phone: "" });
+export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с нами", source }: ContactPopupProps) {
+  const [formData, setFormData] = useState<FormData>({ name: "", phone: "", source });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -136,6 +138,10 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
     };
   }, []);
 
+  useEffect(() => {
+    setFormData(prev => ({ ...prev, source }));
+  }, [source]);
+
   // Валидация формы
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -174,12 +180,13 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
+          source: formData.source || source,
         }),
       });
 
       if (response.ok) {
         setSubmitStatus("success");
-        setFormData({ name: "", phone: "" });
+        setFormData({ name: "", phone: "", source });
         closeTimer.current = window.setTimeout(() => {
           onClose();
           setSubmitStatus("idle");
@@ -199,6 +206,7 @@ export function ContactPopup({ isOpen, onClose, title = "Свяжитесь с �
     <AnimatePresence mode="wait">
       {isOpen && (
       <motion.div
+        key="contact-popup"
         ref={popupContainerRef}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -2,12 +2,21 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react';
 
+interface PopupOptions {
+  title?: string;
+  source?: string;
+}
+
 interface PopupContextType {
   isOpen: boolean;
   title: string;
-  openPopup: (title?: string) => void;
+  source?: string;
+  openPopup: (options?: string | PopupOptions) => void;
   closePopup: () => void;
 }
+
+const DEFAULT_TITLE = "Свяжитесь с нами";
+const DEFAULT_SOURCE = "Сайт ГК Море";
 
 const PopupContext = createContext<PopupContextType | undefined>(undefined);
 
@@ -17,21 +26,34 @@ interface PopupProviderProps {
 
 export function PopupProvider({ children }: PopupProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState("Свяжитесь с нами");
+  const [title, setTitle] = useState(DEFAULT_TITLE);
+  const [source, setSource] = useState<string | undefined>(DEFAULT_SOURCE);
 
-  const openPopup = (customTitle?: string) => {
-    if (customTitle) setTitle(customTitle);
+  const openPopup = (options?: string | PopupOptions) => {
+    if (typeof options === "string") {
+      setTitle(options);
+      setSource(DEFAULT_SOURCE);
+    } else if (options && typeof options === "object") {
+      setTitle(options.title ?? DEFAULT_TITLE);
+      setSource(options.source ?? DEFAULT_SOURCE);
+    } else {
+      setTitle(DEFAULT_TITLE);
+      setSource(DEFAULT_SOURCE);
+    }
     setIsOpen(true);
   };
 
   const closePopup = () => {
     setIsOpen(false);
-    // Сбрасываем заголовок на дефолтный через небольшую задержку
-    setTimeout(() => setTitle("Свяжитесь с нами"), 300);
+    // Сбрасываем значения на дефолтные через небольшую задержку
+    setTimeout(() => {
+      setTitle(DEFAULT_TITLE);
+      setSource(DEFAULT_SOURCE);
+    }, 300);
   };
 
   return (
-    <PopupContext.Provider value={{ isOpen, title, openPopup, closePopup }}>
+    <PopupContext.Provider value={{ isOpen, title, source, openPopup, closePopup }}>
       {children}
     </PopupContext.Provider>
   );

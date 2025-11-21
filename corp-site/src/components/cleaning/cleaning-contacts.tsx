@@ -7,15 +7,15 @@ const contacts = [
   {
     icon: "📞",
     title: "Телефон",
-    value: "+7 (939) 555-01-97",
-    href: "tel:+79395550197",
+    value: "+7 (958) 295-48-02",
+    href: "tel:+79582954802",
     description: "Звоните в любое время"
   },
   {
     icon: "💬",
     title: "WhatsApp",
-    value: "+7 (939) 555-01-97",
-    href: "https://wa.me/79395550197",
+    value: "+7 (958) 295-48-02",
+    href: "https://wa.me/79582954802",
     description: "Быстрая связь через WhatsApp"
   },
   {
@@ -92,15 +92,44 @@ export function CleaningContacts() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg"
         >
-          <div className="h-96">
-            <iframe
-              src="https://yandex.ru/map-widget/v1/?um=constructor%3Ae9d377947107c288533b56765847c8dd9fc58813c2ca7e13dc35666edd9c611c"
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              className="border-0"
-              title="Карта офиса клининговой компании в Сочи"
-            />
+          <div className="relative w-full pb-[60%] sm:pb-[50%] lg:pb-[45%]">
+            <div className="absolute inset-0">
+              <div className="relative w-full h-full overflow-hidden rounded-2xl">
+                <div className="absolute inset-x-4 top-4 flex flex-col gap-1 z-10 text-xs text-gray-400">
+                  <a
+                    href="https://yandex.ru/maps/org/klining_more/25613016887/?utm_medium=mapframe&utm_source=maps"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-teal-500 transition-colors"
+                  >
+                    Клининг Море
+                  </a>
+                  <a
+                    href="https://yandex.ru/maps/239/sochi/category/cleaning_services/184105448/?utm_medium=mapframe&utm_source=maps"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-teal-500 transition-colors"
+                  >
+                    Клининговые услуги в Сочи
+                  </a>
+                  <a
+                    href="https://yandex.ru/maps/239/sochi/category/dry_cleaning/184108251/?utm_medium=mapframe&utm_source=maps"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-teal-500 transition-colors"
+                  >
+                    Химчистка в Сочи
+                  </a>
+                </div>
+                <iframe
+                  src="https://yandex.ru/map-widget/v1/org/klining_more/25613016887/?ll=39.673192%2C43.673327&source=serp_navig&z=16.72"
+                  frameBorder="1"
+                  allowFullScreen
+                  className="w-full h-full border-0 rounded-2xl"
+                  title="Карта Клининг Море"
+                />
+              </div>
+            </div>
           </div>
         </motion.div>
 

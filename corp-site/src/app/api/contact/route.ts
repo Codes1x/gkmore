@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import TelegramBot from 'node-telegram-bot-api';
 
+type ContactPayload = {
+  name: string;
+  phone: string;
+  source?: string;
+  service?: string;
+  message?: string;
+};
+
 export async function POST(request: NextRequest) {
   try {
-    const { name, phone } = await request.json();
+    const { name, phone, source, service, message: details }: ContactPayload = await request.json();
 
     // Валидация данных
     if (!name || !phone) {
@@ -29,22 +37,40 @@ export async function POST(request: NextRequest) {
     const bot = new TelegramBot(botToken, { polling: false });
 
     // Форматируем сообщение в Markdown
-    const message = `
-🌊 *Новая заявка с сайта ГК Море*
+    const messageParts = [
+      '🌊 *Новая заявка с сайта ГК Море*',
+      '',
+      `👤 *Имя:* ${name}`,
+      `📱 *Телефон:* ${phone}`,
+    ];
 
-👤 *Имя:* ${name}
-📱 *Телефон:* ${phone}
-🕐 *Дата:* ${new Date().toLocaleString('ru-RU', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })}
+    if (service) {
+      messageParts.push(`🧹 *Услуга:* ${service}`);
+    }
 
-━━━━━━━━━━━━━━━━━━
-_Автоматическое сообщение с формы обратной связи_
-    `.trim();
+    if (details) {
+      messageParts.push(`📝 *Комментарий:* ${details}`);
+    }
+
+    messageParts.push(`📍 *Страница:* ${source || 'Сайт ГК Море'}`);
+
+    messageParts.push(
+      `🕐 *Дата:* ${new Date().toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      })}`
+    );
+
+    messageParts.push(
+      '',
+      '━━━━━━━━━━━━━━━━━━',
+      '_Автоматическое сообщение с формы обратной связи_'
+    );
+
+    const message = messageParts.join('\n');
 
     // Отправляем сообщение в Telegram
     await bot.sendMessage(chatId, message, {

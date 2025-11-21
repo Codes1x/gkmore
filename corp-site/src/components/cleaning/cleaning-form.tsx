@@ -25,18 +25,46 @@ export function CleaningForm() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.name.trim() || !formData.phone.trim()) {
+      setError("Пожалуйста, заполните имя и телефон.");
+      return;
+    }
+
     setIsSubmitting(true);
+    setError(null);
     
-    // Здесь будет логика отправки формы
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          phone: formData.phone.trim(),
+          service: formData.service || 'Не выбрано',
+          message: formData.message || undefined,
+          source: 'Страница клининга (основная форма)'
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.error || 'Не удалось отправить заявку');
+      }
+
       setIsSubmitted(true);
       setFormData({ name: '', phone: '', service: '', message: '' });
       setTimeout(() => setIsSubmitted(false), 5000);
-    }, 1500);
+    } catch (err) {
+      console.error('Ошибка отправки формы клининга', err);
+      setError(err instanceof Error ? err.message : 'Не удалось отправить заявку. Попробуйте позже.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -151,6 +179,12 @@ export function CleaningForm() {
                   'Отправить заявку'
                 )}
               </motion.button>
+
+              {error && (
+                <p className="text-center text-sm text-red-600">
+                  {error}
+                </p>
+              )}
             </form>
           ) : (
             <motion.div

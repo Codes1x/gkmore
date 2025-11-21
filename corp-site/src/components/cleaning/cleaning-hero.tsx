@@ -1,13 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePopup } from "@/contexts/popup-context";
 
 export function CleaningHero() {
-  const scrollToForm = () => {
-    document.getElementById('cleaning-form')?.scrollIntoView({ 
-      behavior: 'smooth' 
-    });
-  };
+  const { openPopup } = usePopup();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -49,7 +46,7 @@ export function CleaningHero() {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12 sm:mt-0"
           >
             <motion.button
-              onClick={scrollToForm}
+              onClick={() => openPopup({ title: "Заявка на уборку", source: "Страница клининга" })}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all duration-300"
@@ -58,12 +55,12 @@ export function CleaningHero() {
             </motion.button>
             
             <motion.a
-              href="tel:+79395550197"
+              href="tel:+79582954802"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white/20 hover:bg-white/30 text-white font-semibold py-4 px-8 rounded-xl text-lg backdrop-blur-sm border border-white/30 transition-all duration-300"
             >
-              📞 +7 (939) 555-01-97
+              📞 +7 (958) 295-48-02
             </motion.a>
           </motion.div>
         </motion.div>
