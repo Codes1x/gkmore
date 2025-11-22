@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
 import { PopupProvider } from "@/contexts/popup-context";
 import { ContactPopupWrapper } from "@/components/contact-popup-wrapper";
-import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/gtm";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -73,8 +73,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <GoogleTagManager />
-        <GoogleTagManagerNoscript />
+        <GoogleTagManager gtmId="GTM-KPVTWRNX" />
         
         <PopupProvider>
           <SmoothScrollProvider offset={80}>
