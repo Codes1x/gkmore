@@ -54,11 +54,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/icon', sizes: '32x32', type: 'image/png' },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon", sizes: "32x32", type: "image/png" },
     ],
     apple: [
-      { url: '/apple-icon', sizes: '180x180', type: 'image/png' },
+      { url: "/apple-icon", sizes: "180x180", type: "image/png" },
     ],
   },
 };
@@ -70,17 +70,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
+      <head>
+        <GoogleTagManager gtmId="GTM-KPVTWRNX" />
+      </head>
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <GoogleTagManager gtmId="GTM-KPVTWRNX" />
-        
         <PopupProvider>
           <SmoothScrollProvider offset={80}>
             {children}
           </SmoothScrollProvider>
           <ContactPopupWrapper />
         </PopupProvider>
+
         <Analytics />
       </body>
     </html>
